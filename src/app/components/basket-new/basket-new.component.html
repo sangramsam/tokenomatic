@@ -1,0 +1,515 @@
+<div #place2 class="container col-12 darkTheameBoxbackground">
+  <div class="wizard" *ngIf="wizard1===true">
+    <div class="row ">
+      <!----------------------------Basket creation Layout Starting-------------------------->
+      <div class="col-md-6">
+        <h3>Step 1. Create new Basket</h3>
+        <p class="-Make-sure-you-hav">** Make sure you have some <span class="text-style-1">WXETH</span> in your wallet
+          and
+          the same is authorized</p>
+        <br />
+        <br />
+
+        <!----------------------------------Enter Basket Name------------------------------->
+        <div class="form-group" style="width:566px;">
+          <label class="Name-your-basket-label" *ngIf="LabelControl.portfolioName">Name your basket</label>
+          <input type="text" placeholder={{placeholderControl.portfolioName}} class="form-control ds Rectangle"
+            id="name" name="name" [(ngModel)]="data['portfolioName']" (ngModelChange)="calling(data['portfolioName']);"
+            (click)="LabelControl.portfolioName=true; placeholderControl.portfolioName=''"
+            (blur)="changeLabelVisibiltity('portfolioName')">
+          <p style="color: red">{{error}}</p>
+        </div>
+        <br />
+
+        <!----------------------------Multi token Selection dropdown-------------------------->
+        <div class="form-group">
+          <label class="Name-your-basket-label" *ngIf="portfolio.length > 0">Select Tokens For Your Basket</label>
+          <div class="multiselect-holder ds">
+            <angular2-multiselect class="custom-class-example" [data]="itemList" [(ngModel)]="selectedItems"
+              [settings]="settings" (onSelect)="OnItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)"
+              id="tokenSelect" style="height: 50px;">
+              <c-item>
+                <ng-template let-item="item">
+                  <label class="tok_name"
+                    style="color:rgba(0, 0, 0, 0.85);min-width: 150px;font-family: Helvetica;font-size: 16px;margin-top:10px;">{{item.itemName}}</label><br>
+                  <label class="tok_val"
+                    style="color: rgba(0, 0, 0, 0.5);min-width: 150px;margin-left:5px;">{{item.balance}}&nbsp;&nbsp;{{item.itemName}}</label>
+                  <!-- <hr  style="color: rgba(0, 0, 0, 0.5);"> -->
+                </ng-template>
+                <hr style="color: rgba(0, 0, 0, 0.5);">
+              </c-item>
+            </angular2-multiselect>
+          </div>
+        </div>
+        <!------------------------Enter the quantity 0f token and fixing the basket price-------------------------------------------->
+
+        <div class="form-group" *ngIf="portfolio.length > 0" style="width:453px;background-color:#333333;">
+          <div class="panel">
+            <div class="panel-body">
+              <div class="container">
+                <table class="table">
+                  <thead class="tab-head">
+                    <tr>
+                      <th style="text-align:left">Token</th>
+                      <th style="text-align:center">Balance</th>
+                      <th style="text-align:center">Current Price (ETH)</th>
+                      <th style="text-align:right">Enter Quantity *</th>
+                    </tr>
+                  </thead>
+                  <tbody class="tab-body">
+                    <tr *ngFor="let asset of portfolio; let i = index" id="createPortfolioTBody">
+                      <td style="text-align:left">
+                        <span *ngIf="asset.balance==0" class="noBalanceSymbol">*</span>
+                        <span *ngIf="asset.balance!=0">&nbsp;&nbsp;</span>
+                        {{asset.CoinName}}
+                      </td>
+                      <td style="text-align:center">{{asset.balance | number:'1.1-4'}}</td>
+                      <td style="text-align:center">
+                        <span *ngIf="asset.price>0" matTooltip="current price in USD {{asset.priceUSD}}"
+                          [matTooltipPosition]="'above'">
+                          {{asset.price}}
+                        </span>
+                        <span *ngIf="asset.price== undefined" matTooltip="current price in USD {{asset.priceUSD}}"
+                          [matTooltipPosition]="'above'">
+                          Not Available
+                        </span>
+                        <!-- <span *ngIf="asset.balance==0">--</span> -->
+                      </td>
+                      <!-- <td style="text-align:right"><input type="number" class="form-control ds RectangleSellingPrice"
+                          [(ngModel)]="portfolio[i].Reqbalance" (input)="trackWithTokenBalance(portfolio[i].Reqbalance,portfolio[i].balance)"
+                          style="display: inline-block;text-align: center;" [readonly]="asset.balance==0"
+                          [class.disableInputbox]="asset.balance==0" /></td> -->
+
+                      <td style="text-align:right"><input type="number" class="form-control ds RectangleSellingPrice"
+                          [(ngModel)]="portfolio[i].Reqbalance"
+                          (input)="trackWithTokenBalance(portfolio[i].Reqbalance,portfolio[i].balance)"
+                          style="display: inline-block;text-align: center;"
+                          [class.disableInputbox]="asset.balance==0" /></td>
+                    </tr>
+                    <tr *ngIf="noBalanceTokens > 0">
+                      <td class="tab-token" colspan="4">
+                        *You don’t have these tokens yet. You'll be allowed to buy them after clicking on 'Create Basket
+                        with Trade'.
+                      </td>
+                    </tr>
+                    <!-- <tr *ngIf="noBalanceTokens > 0">
+                      <td><button class="TradeNowRectangle" (click)="modal()"><span class="Trade-Now">Trade Now</span></button></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr> -->
+                  </tbody>
+
+                </table>
+              </div>
+            </div>
+            <div class="panel-footer">
+              <div class="container">
+                &nbsp;&nbsp;<span>Total Basket Value: &nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  {{totalprice | number:'1.1-4'}} ETH</span>
+
+              </div>
+              <!-- <span style="text-align: center;">{{totalprice | number:'1.1-4'}} AION</span> -->
+            </div>
+          </div>
+        </div>
+        <!---------------Button For Basket creation and Trading-------------------->
+
+        <div class="form-group">
+          <br />
+          <div class="form-group" style="width:566px;">
+            <!-- <label>Asking Price (in WXAION)</label> -->
+            <label class="Name-your-basket-label" *ngIf="LabelControl.askingPrice">Selling Price in WXETH</label>
+            <input type="number" id="askingPrice" placeholder={{placeholderControl.askingPrice}}
+              class="form-control ds Rectangle" [(ngModel)]="data.askingPriceInWand"
+              (click)="LabelControl.askingPrice=true; placeholderControl.askingPrice=''" name="ask"
+              (blur)="changeLabelVisibiltityPrice('askingPrice')" />
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-10">
+              <button (click)="createPortfolio(data)" [disabled]="!isPortfolioValid()"
+                [class.RectangleButtonDisable]="!isPortfolioValid()" [class.RectangleButtonActive]="isPortfolioValid()"
+                *ngIf="updatePorfolioFlag===false && noBalanceTokens === 0" style="margin-left:50px">Create
+                Basket
+              </button>
+              <button (click)="intialtrade(data)" [disabled]="!isPortfoliotradeValid()"
+                [class.RectangleButtonDisable]="!isPortfoliotradeValid()"
+                [class.RectangleButtonActive]="isPortfoliotradeValid()" *ngIf="noBalanceTokens > 0"
+                style="margin-left:50px">Create
+                Basket with Trade
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--------------------------------------Basket Creation End---------------------------------------------->
+      <div class="col-md-6">
+
+        <div class="container">
+          <div class="charts" style="min-height: 100%;max-height: 100%;padding: 20%;">
+            <!-- <div id="piechartdiv1" [style.width.%]="100" [style.height.px]="289.9"></div> -->
+            <div class="row col-12">
+              <div id="piechartdiv1"></div>
+            </div>
+            <div class="row col-12">
+              <h3 style="text-align:center;margin-top:30px;" *ngIf="showChart === true">Your Basket Analysis</h3>
+            </div>
+            <div class="row col-12">
+              <div id="legenddiv"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="loader" style="width: 100%!important;" *ngIf="showLoader">
+    <div class="loader">
+      <img class="img img-responsive" src="assets/images/tt-loader.png  " alt=""
+        style="width:100px;margin-left:45%;margin-top:40px;">
+    </div>
+  </div>
+  <div class="col-md-12" *ngIf="wizard2===true">
+    <div class="wizard">
+      <button class="sign-publish-portfolio-button" [disabled]="EthBasketService.authdisable"
+        (click)="EthBasketService.authorize_start()">Authorization</button>
+      <!-- <app-basket-authorize-token></app-basket-authorize-token> -->
+    </div>
+  </div>
+  <div class="col-md-12" *ngIf="wizard3===true">
+    <div class="wizard">
+      <div class="row">
+        <div class="col-md-6">
+          <h3>Step 3. Deposit Tokens into your Basket</h3>
+          <div style="width: 84%;  margin-top: 18px">
+            <table class="table  table-bordered">
+              <tr>
+                <th>Token</th>
+                <th>Quantity</th>
+                <th>Current Price(ETH)</th>
+              </tr>
+              <tr *ngFor="let token of portfolioTokenWithValue; let i = index">
+                <td>
+                  <p>{{token.symbol}}</p>
+                </td>
+                <td>
+                  <p>{{token.value}}</p>
+                </td>
+                <td>
+                  <p>{{token.currentPrice}}</p>
+                </td>
+              </tr>
+            </table>
+            <p>Total ETH value of tokens <span class="pull-right">{{totalDepositPrice | number:'1.1-4'}} ETH</span></p>
+            <div style="text-align: center">
+              <button class="sign-publish-portfolio-button" (click)="basketDeposit()">Deposit</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h3 style="margin-top: 30px" *ngIf="showChart === true">Basket Analysis</h3>
+          <div class="charts" style="max-width: 88%;margin-top: 67px">
+            <div id="piechartdeposite" [style.width.%]="100" [style.height.px]="200"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="col-md-12" *ngIf="wizard4===true">
+    <h3 style="margin-left: 33px;">Step 4. Publish Basket </h3>
+    <div class="portfolio-analysis" style="padding: 10px!important; ">
+      <div class="analysis-result">
+        <div class="portfolioAnalysis">
+          <div class="portfolioHeading">
+            <p>Basket Analysis</p>
+          </div>
+          <div class="graph">
+            <div class="row mar0">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="charts" style="max-width: 80%;margin: 0 auto">
+                  <div id="piechartdiv" [style.width.%]="100" [style.height.px]="200"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-header" *ngIf="showdata">
+          <div class="col col-1">Token</div>
+          <div class="col col-2">Quantity</div>
+          <div class="col col-3">Price (ETH)</div>
+          <div class="col col-4">Price (USD)</div>
+        </div>
+        <div class="createdPortfolio" *ngIf="showdata">
+          <div class="table-row" *ngFor="let asset of publishData">
+            <div class="col col-1">{{asset.title}}</div>
+            <div class="col col-2">{{asset.value}}</div>
+            <div class="col col-3">{{asset.alltoken['ETH'] | number:'1.0-4'}}</div>
+            <div class="col col-4">{{asset.alltoken['USD'] | number:'1.0-4'}}</div>
+          </div>
+        </div>
+        <div class="totalValue">
+          <div class="table-row">
+            <div class="col col-1">Total</div>
+            <div class="col col-2">{{totalQuanity}}</div>
+            <div class="col col-3">{{overallETH | number:'1.0-4'}}</div>
+            <div class="col col-4">{{overallUSD | number:'1.0-4'}}</div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align: center;margin: 30px;">
+        <button class="sign-publish-portfolio-button" (click)="publish()">Publish</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="popup-box" [ngStyle]="{'display':displayGif}">
+  <div class="popup-gif">
+    <div class="popup_header">Please Wait</div>
+    <div class="popup_content">
+      <div class="popup_sub">
+        <img class="img img-responsive gif-img" src="assets/images/tt-loader.png  " alt="" style="width: 100px;">
+      </div>
+      <div class="gif_footer">Please wait while the transaction confirms on the Blockchain</div>
+    </div>
+  </div>
+</div>
+<div class="popup-box" [ngStyle]="{'display':displayGif1}">
+  <div class="popup-gif">
+    <div class="popup_header">Please Wait</div>
+    <div class="popup_content">
+      <div class="popup_sub">
+        <img class="img img-responsive gif-img" src="assets/images/tt-loader.png  " alt="" style="width: 100px;">
+      </div>
+      <div class="gif_footer">Please wait, while the offers are being fetched</div>
+    </div>
+  </div>
+</div>
+<div class="popup-box" [ngStyle]="{'display':displayGif2}">
+  <div class="popup-gif">
+    <div class="popup_header">Please Wait</div>
+    <div class="popup_content">
+      <div class="popup_sub">
+        <img class="img img-responsive gif-img" src="assets/images/tt-loader.png  " alt="" style="width: 100px;">
+      </div>
+      <div class="gif_footer">Setting up the basket creation page</div>
+    </div>
+  </div>
+</div>
+<!-- <div class="popup-box" [ngStyle]="{'display':EthBasketService.displaybask_loader}">
+  <div class="popup-gif">
+    <div class="popup_header">Please Wait</div>
+    <div class="popup_content">
+      <div class="popup_sub">
+        <img class="img img-responsive gif-img" src="assets/images/tt-loader.png  " alt="" style="width: 100px;">
+      </div>
+      <div class="gif_footer">Please wait don't close the application your request is processing . . .</div>
+    </div>
+  </div>
+</div> -->
+<div class="popup-box" [ngStyle]="{'display':displayRequest}">
+  <div class="popup-gif" style="height: 35rem!important;width: 37%!important;">
+    <div class="popup_header">Themed Baskets Request</div>
+    <div class="popup_content">
+      <div class="popup_sub" style="text-align: left!important;">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="willingtopay">Willing to Pay</label>
+            <input id="willingtopay" class="form-control" type="number" placeholder="IN ETH"
+              formControlName="PortfolioPriceInEth">
+            <span class="error"
+              *ngIf="form.get('PortfolioPriceInEth').dirty == true && form.get('PortfolioPriceInEth').errors && form.get('PortfolioPriceInEth').errors.required == true">Willing
+              to Pay is required</span>
+          </div>
+          <div class="form-group">
+            <label for="mark">Mark up for Max</label>
+            <input id="mark" class="form-control" type="number" placeholder="IN ETH"
+              formControlName="PortfolioMaxPriceInEth">
+            <span class="error"
+              *ngIf="form.get('PortfolioMaxPriceInEth').dirty == true && form.get('PortfolioMaxPriceInEth').errors && form.get('PortfolioMaxPriceInEth').errors.required == true">Mark
+              up for Max</span>
+          </div>
+          <div class="form-group">
+            <label for="ExpiryDate">Expiry Date</label>
+            <input id="ExpiryDate" class="form-control" type="text" readonly placeholder="Expiry Date = 1 week">
+          </div>
+          <div class="button-row" style="text-align: center;">
+            <button class="sign-publish-portfolio-button" type="submit">Submit</button>
+            <button type="reset" class="sign-publish-portfolio-button" (click)="requestForTheme('exch')">Cancel</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!----------------------Modal For Trading Functionalities----------------------------------->
+<div id="buymodal" *ngIf="insatantBuyModal">
+  <div class="modal fade in portfolio-dialogue" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+      <div [ngClass]="switchThemeService.switchTheme ? 'modal-content darkThemeModal-Content':'modal-content' "
+        class="modal-content">
+        <div class="modal-header"
+          style="padding: 10px; background-image: linear-gradient(to bottom, #533dbd, #59357e);">
+          <!-- <div class="row"> -->
+          <h4 class="modal-title w-100 text-center" style="color: white;margin: 0 auto">Trade</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="z-index: 999;color: white;"
+            (click)="closeInstantbuyModal()">
+            &#10005;
+            <!-- <span aria-hidden="true"><i class="fa fa-times"></i></span> -->
+          </button>
+          <!-- </div> -->
+        </div>
+        <div class="modal-body" style="padding: 45px!important;">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-8">
+                <div class="form-group">
+                  <input readonly class="form-control ds" value="Remaining Balance:{{Remain_Bal | number:'1.0-4'}} ETH">
+                </div>
+              </div>
+              <div class="col-sm-4"></div>
+            </div>
+
+            <div class="row">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="head-left-align">Token</th>
+                    <th class="head-vert-align">Current Price (ETH)</th>
+                    <th class="head-vert-align">Enter Quantity</th>
+                    <th class="head-vert-align">Delete Token</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of demo;index as i;">
+                    <td class="body-left-align">{{data.symbol}}</td>
+                    <td *ngIf="data.current_price>0" class="body-vert-align">{{data.current_price}}</td>
+                    <td *ngIf="data.current_price == undefined" class="body-vert-align">Not Available</td>
+                    <td class="body-vert-align">
+                      <div style="top:50%;display: inline-block"><input type="Number" style="text-align:center;"
+                          #quantity [(ngModel)]="totalamount[i]"
+                          (ngModelChange)="totalvalue(data.current_price,data.symbol)" class="form-control de"></div>
+                    </td>
+                    <td>
+                      <button class="sign-publish-portfolio-button" [disabled]="delete_enable"
+                        (click)="removetoken(demo[i].symbol)" type="submit">Delete</button>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th class="foot-left-align">Total Value:</th>
+                    <th class="foot-vert-align"></th>
+                    <th class="foot-vert-align"></th>
+                    <th class="foot-vert-align">{{total | number:'1.0-8'}} ETH</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+
+          <div class="container" *ngIf="bestrate">
+            <p class="best-trade">Trade rates for you</p>
+
+            <br>
+            <div class="row" style="padding-right: 0px;">
+              <div class="col-sm" *ngFor="let data of trade;">
+                <div class="card">
+                  <span>ETH to {{data.symbol}}</span>
+                  <span>{{data.trade}}</span>
+                  <p>{{data.token_value | number:'1.0-8'}} {{data.symbol}}</p>
+                  <p>{{data.value | number:'1.0-8'}} ETH</p>
+                </div>
+              </div>
+
+              <div style="margin: auto;" *ngIf="submittoken.length>0" class="alert alert-danger">
+                These {{submittoken}} Token(s) is/are not available on Kyber, Bancor and Uniswap.
+              </div>
+            </div>
+            <br>
+            <div style="text-align: center;">
+              <button class="btn btn-custom btn-justify dd" [disabled]="trade.length===0"
+                [class.RectangleButtonDisable]="trade.length===0" [class.RectangleButtonActive]="trade.length>0"
+                (click)="prepTrade()">Prepare Best Trade</button>
+            </div>
+          </div>
+          <div class="container" *ngIf="besttrade">
+            <p class="best-trade">Best trade rates for you</p>
+
+            <br>
+            <div class="row" style="padding-right: 0px;">
+              <div class="col-sm" *ngFor="let data of submit_trade;">
+                <div class="card">
+                  <span>ETH to {{data.symbol}}</span>
+                  <span>{{data.trade}}</span>
+                  <p>{{data.token_value | number:'1.0-8'}} {{data.symbol}}</p>
+                  <p>{{data.value | number:'1.0-8'}} ETH</p>
+                </div>
+              </div>
+              <div style="margin: auto;" *ngIf="submittoken.length>0" class="alert alert-danger">
+                These {{submittoken}} Token(s) is/are not available on Kyber, Bancor and Uniswap right now if you want
+                this token for basket creation then you can retry the trading process otherwise you can continue the
+                tradeing process by clicking 'Confirm Best Trade' Button.
+              </div>
+            </div>
+            <br>
+            <div style="text-align: center;">
+              <button class="btn btn-custom btn-justify dd" [disabled]="submit_trade.length===0"
+                [class.RectangleButtonDisable]="submit_trade.length===0"
+                [class.RectangleButtonActive]="submit_trade.length>0" (click)="confirm()">Confirm Best Trade</button>
+            </div>
+          </div>
+          <br><br>
+          <div style="text-align: center;" *ngIf="traderate">
+            <h6><span><b>Note:</b></span> You can enter an amount higher than the one you want in your basket, but not
+              lower.</h6>
+            <button (click)="setbuyvalue()" [disabled]="!isTradeValid()"
+              [class.RectangleButtonDisable]="!isTradeValid()" [class.RectangleButtonActive]="isTradeValid()"
+              *ngIf="updatePorfolioFlag===false">Check Trade Rates</button>
+            <!-- <button (click)="setbuyvalue()"
+            [class.RectangleButtonActive]="true">Check Trade Rates</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade in"></div>
+</div>
+<!----------------------------Modal For Choosing Trade With Basket Creation Or Not----------------------------------->
+<div id="buymodal" *ngIf="intialModal">
+  <div class="modal fade in portfolio-dialogue" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+      <div [ngClass]="switchThemeService.switchTheme ? 'modal-content darkThemeModal-Content':'modal-content' "
+        class="modal-content">
+        <div class="modal-header"
+          style="padding: 10px; background-image: linear-gradient(to bottom, #533dbd, #59357e);">
+          <!-- <div class="row"> -->
+          <h4 class="modal-title w-100 text-center" style="color: white;margin: 0 auto">Trade</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="z-index: 999;color: white;"
+            (click)="closeInstantbuyModal1()">
+            &#10005;
+          </button>
+        </div>
+        <div class="modal-body" style="padding: 45px!important;">
+
+          <div class="container">
+            <h4>DO YOU WISH TO CREATE THE BASKET NOW?</h4>
+            <div class="buttons">
+              <button (click)="modal(1)" class="confirm">YES</button> <button (click)="modal(2)"
+                class="cancel">NO</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade in"></div>
+</div>
+<!----------------------------------------------------------------------------------------------->

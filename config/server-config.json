@@ -1,0 +1,295 @@
+{
+  "desktopConfig": {
+    "DappServer": {
+      "mainnet": "https://desktopapp.wandx.co/",
+      "testNet": "https://desktopapptest.wandx.co/",
+      "localServer": "https://desktopapptest.wandx.co/",
+      "privateNet": ""
+    },
+    "private_token": {
+      "token": "ab_tmno6o4SyHXphKxY3"
+    },
+    "blockchain": {
+      "NEO": {
+        "TESTNET": {
+          "NEO_SERVER_URL_TESTNET": "https://neotnapi.wandx.co/api/bc/getOrderDetails",
+          "NEO_SERVER_URL_STAKE_TESTNET": "https://neotnapi.wandx.co/api/bc/getOrderDetails",
+          "NEO_TESTNET_RPC_URL": "https://neotnrpc.wandx.co:8443",
+          "NEOSCAN_URL": "TestNet",
+          "contractScriptHash": "4b6dc098507569b853267a881faaefe15e84c852",
+          "NEO_ASSET_ID": "c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b",
+          "NEO_GAS_ASSET_ID": "602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7",
+          "WAND_NEO_ASSET_ID": "4c87396582bdc9daf8df0470f175c79021190b49",
+          "tokens": [
+            {
+              "name": "Travala",
+              "fullName": "Travala",
+              "address": "c84ec4db4edb87e0421862fe934eceea2b4d56a6",
+              "id": 1,
+              "symbol": "AVA",
+              "decimals": 8
+            },
+            {
+              "name": "Loopring Neo Token",
+              "fullName": "Loopring Neo Token",
+              "address": "617428b12734d0635d5b942d0fcf708762db3297",
+              "id": 2,
+              "symbol": "LRN",
+              "decimals": 8
+            },
+            {
+              "name": "For The Win",
+              "fullName": "For The Win",
+              "address": "c168cad4a48ef8d95b38f0b6dc792b37d99a7973",
+              "id": 3,
+              "symbol": "FTW",
+              "decimals": 8
+            },
+            {
+              "name": "Contract Token X",
+              "fullName": "Contract Token X",
+              "address": "9aff1e08aea2048a26a3d2ddbb3df495b932b1e7",
+              "id": 4,
+              "symbol": "CTX",
+              "decimals": 8
+            },
+            {
+              "name": "WandX Neo Token",
+              "fullName": "WandX Neo Token",
+              "address": "4c87396582bdc9daf8df0470f175c79021190b49",
+              "id": 5,
+              "symbol": "WANDNEO",
+              "decimals": 8
+            }
+          ]
+        },
+        "PRIVATENET": {
+          "NEO_SERVER_URL_TESTNET": "http://neotnapi.wandx.co/api/bc/getOrderDetails",
+          "NEO_SERVER_URL_STAKE_TESTNET": "http://neotnapi.wandx.co/api/bc/getOrderDetails",
+          "NEO_TESTNET_RPC_URL": "http://139.59.67.102:30333",
+          "NEOSCAN_URL": "http://139.59.67.102:4000/api/main_net",
+          "contractScriptHash": "1372dff2b94fca002bf20bc92bdbc9b707b31e65",
+          "NEO_ASSET_ID": "c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b",
+          "NEO_GAS_ASSET_ID": "602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7",
+          "WAND_NEO_ASSET_ID": "f3c33786e03a7fc4df0c6c916df4e56c07ca5650",
+          "tokens": [
+            {
+              "name": "Aphelion",
+              "fullName": "Aphelion",
+              "address": "69814b077395ced2c4141279dc6680a9359bf993",
+              "id": 1,
+              "symbol": "APH",
+              "decimals": 8
+            },
+            {
+              "name": "Travala",
+              "fullName": "Travala",
+              "address": "90987085d099fda8da0cc5655d75dfb76b76e369",
+              "id": 2,
+              "symbol": "AVA",
+              "decimals": 8
+            },
+            {
+              "name": "Red Pulse Token",
+              "fullName": "Red Pulse Token",
+              "address": "cf631b17062fe1b2275c2d13859d10e485dd3107",
+              "id": 3,
+              "symbol": "RPX",
+              "decimals": 8
+            },
+            {
+              "name": "Qlink Token",
+              "fullName": "Qlink Token",
+              "address": "a8fd3721fab2161ba046d131c0431612de8e5376",
+              "id": 4,
+              "symbol": "QLC",
+              "decimals": 8
+            },
+            {
+              "name": "Loopring Neo Token",
+              "fullName": "Loopring Neo Token",
+              "address": "e46d6d3ede87bb7f93ad7ce5f0d4a578f6119edc",
+              "id": 5,
+              "symbol": "LRN",
+              "decimals": 8
+            },
+            {
+              "name": "Phantasma",
+              "fullName": "Phantasma",
+              "address": "a15008c3c21c9c1e905acdef2fe7e56af534b42b",
+              "id": 6,
+              "symbol": "SOUL",
+              "decimals": 8
+            },
+            {
+              "name": "GagaPay network token",
+              "fullName": "GagaPay network token",
+              "address": "97dd8b15afad6df4dec30b88460ebb22d9428564",
+              "id": 7,
+              "symbol": "GTA",
+              "decimals": 8
+            },
+            {
+              "name": "TreatailToken",
+              "fullName": "TreeTailToken",
+              "address": "17dc5e9ac0965b39626b7b820e6a96ecff0cfd68",
+              "id": 8,
+              "symbol": "TTL",
+              "decimals": 8
+            },
+            {
+              "name": "Special Drawing Token",
+              "fullName": "Special Drawing Token",
+              "address": "37b5011de8671fb7c03fdcea340dbfe72bd6ad13",
+              "id": 9,
+              "symbol": "SDT",
+              "decimals": 8
+            }
+          ]
+        }
+      },
+      "ETH": {
+        "TESTNET": {
+          "TokenVault": "0xbaab5cac3c8ada9f04d987aaeb4267a4d3f692f1",
+          "TokenHistoryUrl": "https://wandxrgdiag.blob.core.windows.net/tokentradedatat1/testtoken7daystrade.json",
+          "ServiceURL": "https://ethtest.wandx.co/api/",
+          "CryptoCompareUrl": "https://min-api.cryptocompare.com/data/histoday",
+          "WandxCompareUrl": "http://wandx-api.azurewebsites.net/api/trade/history/hourly/",
+          "ThemedBasketRequest": "https://wandx-api.azurewebsites.net/",
+          "BashketURL": "https://erpt.privatenet.xyz:8443/api/portfolio/findPortfolio",
+          "TxAppnetURL": "https://ropsten.etherscan.io/tx/",
+          "AddressAppnetURL": "https://ropsten.etherscan.io/address/",
+          "EthTokenDetailURL": "https://ropsten.etherscan.io/tokenholdings?a=",
+          "ApiManagementSubscriptionKey": "c807bf6f64494923862a780a305397a2",
+          "AllowedNetwork": "3",
+          "WandxExchangeFeeRate": 0.00025,
+          "EthExchangeFeeRate": 0.001,
+          "OtherExchageFeeRate": 0.0015,
+          "EtherTokenId": 7,
+          "EtherTokenAddress": "0xc377e1b1916ba8825e14ed38cefdff47ec70ee07",
+          "WandxTokenId": "2",
+          "WandxTokenAddress": "0xeae069eac7c768fd16f677d2e17e150567f512da",
+          "WandxTokenDecimals": 18,
+          "OrderBookContractAddress": "0x97f09ec8540f4433f736851d712a55b72c5f8c0f",
+          "CretaeContractAddress": "0xd98fd92d7a47ede09e41944f2035bf009c72beb1",
+          "protoStorageAddress": "0xCF7a14B50d7fcf6A28EaB42daa2020e4826bB268",
+          "TrasfersProxyAddress": "0x59970f5b98edb807d37fbb709f034a4912125f6f",
+          "BlockExpirationWindow": 52000,
+          "NodeServer": "https://baskettestnet.wandx.co/"
+        },
+        "MAINNET": {
+          "TokenVault": "0xbaab5cac3c8ada9f04d987aaeb4267a4d3f692f1",
+          "TokenHistoryUrl": "https://wandxrgdiag.blob.core.windows.net/tokentradedatat1/testtoken7daystrade.json",
+          "ServiceURL": "https://ethmain.wandx.co/api/",
+          "CryptoCompareUrl": "https://min-api.cryptocompare.com/data/histoday",
+          "WandxCompareUrl": "http://wandx-api.azurewebsites.net/api/trade/history/hourly/",
+          "ThemedBasketRequest": "https://wandx-api.azurewebsites.net/",
+          "BashketURL": "https://empt.privatenet.xyz:8443/api/portfolio/findPortfolio",
+          "TxAppnetURL": "https://etherscan.io/tx/",
+          "AddressAppnetURL": "https://etherscan.io/address/",
+          "EthTokenDetailURL": "https://etherscan.io/tokenholdings?a=",
+          "ApiManagementSubscriptionKey": "c807bf6f64494923862a780a305397a2",
+          "AllowedNetwork": "1",
+          "WandxExchangeFeeRate": 0.00025,
+          "EthExchangeFeeRate": 0.001,
+          "OtherExchageFeeRate": 0.0015,
+          "EtherTokenId": 5,
+          "EtherTokenAddress": "0x47423b0fdb181ecab813c908307e9795c0272db7",
+          "WandxTokenId": 20,
+          "WandxTokenAddress": "0x27f610bf36eca0939093343ac28b1534a721dbb4",
+          "WandxTokenDecimals": 18,
+          "OrderBookContractAddress": "0xf9570f0332776abc55e5fbdb35c82bb20b5ad00b",
+          "CretaeContractAddress": "0x93bcdc141a64eece054064ff13d9330b33abee92",
+          "protoStorageAddress": "0x3c7cb846685317415cf35a2f9e80f81715bb5a8b",
+          "TrasfersProxyAddress": "0x61b2a762ef43cec2ccf8904f7b8bf533544abf20",
+          "BlockExpirationWindow": 52000,
+          "NodeServer": "https://ethmainportfolio.wandx.co/"
+        }
+      },
+      "aion": {
+        "TESTNET": {
+          "OrderBookContractAddressAION": "0xa015BB803706FD50e04bbE52651baBA11667fE9B1fa91cCf79f70DD61f40c716",
+          "TrasfersProxyaionAddress": "0xa0dB3Aec6247C6Af0d196677547A75Afa834cDa6145C9F097e79a917eAc02980",
+          "EtherTokenaionAddress": "0xa0a4091a7e638248DbE0130Cfc30c131548229Ce1b4C316B254c2460d4287843",
+          "VBPExchageAddress": "0xa02857DA377aF85fF41029BFb1C7296A0d144a9D31563c0CeA055Aae88B4B5B0",
+          "ServiceURLAION": "https://aionstest.wandx.co/api/",
+          "AionbasketURL": "https://wanpburlmain.wandx.co/aiontestnetbasket/api/portfolio/findPortfolio",
+          "GNTTokenaddress": "0xA045B62E942528F6237D100a4A61fc605F87E9c6dcc5A444aEC6A3Dd4303af5a",
+          "ZRXTokenaddress": "0xA062f3aAF84eBc32084f7543A6c13f9553948868bC742dd47A13789D9d196975",
+          "QTUMTokenaddress": "0xa0dE5F29288E2D98BbAc5b4B42656efC61BdD158CA4BcBb35F70D7d3e90419F9",
+          "sandTokenaddress": "0xA050643dF89C272B6e9E46cba62226E24b422FA2A9B1C725c65e60644e332Fe4",
+          "powrTokenAddress": "0xa0ade465e3a26c991659b832d7256EB0FBb695C90e71c55A85652D9814f4408b",
+          "wandTokenAddress": "0xa022abF9Eafa13841Df61Ff2bD5cABCE68f5AbdBE623128828267C0Cc6451CDb",
+          "WandxTokenAddressAION": "0xa022abF9Eafa13841Df61Ff2bD5cABCE68f5AbdBE623128828267C0Cc6451CDb",
+          "providerURL": "https://aion.api.nodesmith.io/v1/mastery/jsonrpc?apiKey=5aabe7dd4071419d92e99f19a1e5b5db"
+        },
+        "MAINNET": {
+          "OrderBookContractAddressAION": "0xA0f81F72B78197ebe298e2FDd3A1E224F80a4B902D6F6a57E80e4a322E5Db1D1",
+          "TrasfersProxyaionAddress": "0xa0B75b3DFFE8d4F0E3C5D07f31437E939040593230D6658cAe57b2a0fD2Aa803",
+          "EtherTokenaionAddress": "0xa062913C81a71b819E3f8B453Ba65584439c5629A8FF6C34d1A28281fFeE26FD",
+          "VBPExchageAddress": "0xa0C0D2Ce127AAd2D35abf8ABf643B40cBE125AcE76EA65b6d8F1e882C51e3633",
+          "ServiceURLAION": "https://aionsmain.wandx.co/api/",
+          "AionbasketURL": "https://wanpburlmain.wandx.co/aionbasket/api/portfolio/findPortfolio",
+          "GNTTokenaddress": "",
+          "ZRXTokenaddress": "",
+          "QTUMTokenaddress": "",
+          "sandTokenaddress": "",
+          "powrTokenAddress": "",
+          "wandTokenAddress": "0xa081848bA2854CB906D9C14892cB0f8d08DA46b57CD44E47e6cb273e9a4685A1",
+          "WandxTokenAddressAION": "0xa081848bA2854CB906D9C14892cB0f8d08DA46b57CD44E47e6cb273e9a4685A1",
+          "providerURL": "https://aion.api.nodesmith.io/v1/mainnet/jsonrpc?apiKey=5aabe7dd4071419d92e99f19a1e5b5db"
+        }
+      },
+      "wan": {
+        "TESTNET": {
+          "BashketURLWAN": "https://wanpburlmain.wandx.co/wantestnetbasket/api/portfolio/findPortfolio",
+          "ServiceURLWAN": "https://wanstest.wandx.co/api/",
+          "TxAppnetURLWAN": "https://testnet.wanscan.org/tx/",
+          "AddressAppnetURLWAN": "https://testnet.wanscan.org/address/",
+          "ApiManagementSubscriptionKeyWAN": "c807bf6f64494923862a780a305397a2",
+          "AllowedNetworkWAN": 3,
+          "WandxExchangeFeeRateWAN": 0.00025,
+          "EthExchangeFeeRateWAN": 0.001,
+          "OtherExchageFeeRateWAN": 0.0015,
+          "EtherTokenIdWAN": 7,
+          "EtherTokenAddressWAN": "0x9e8f2cae092ef2e991cf101329cba5148a81dce9",
+          "WandxTokenIdWAN": 2,
+          "WandxTokenAddressWAN": "0x9181bf7531faf4f4b488621f1e63dee09e268fe2",
+          "WandxTokenDecimalsWAN": 18,
+          "OrderBookContractAddressWAN": "0xc93b5f160cfad7199365188e21cfb921563990b3",
+          "CretaeContractAddressWAN": "0x4437bfb7fa27cd72e7adc2000da35649fd376c01",
+          "protoStorageAddressWAN": "0x11c60465f406b9b67a05a687866c52787f85d51f",
+          "TrasfersProxyAddressWAN": "0xbfba523d7561b8e6676ede5066e4127854c7197e",
+          "BlockExpirationWindowWAN": 52000,
+          "providerwanURL": "https://mywanwallet.nl/testnet",
+          "chainid": 3,
+          "gaslimit": 2816780
+        },
+        "MAINNET": {
+          "BashketURLWAN": "https://wanpburlmain.wandx.co/wanbasket/api/portfolio/findPortfolio",
+          "ServiceURLWAN": "https://wansmain.wandx.co/api/",
+          "TxAppnetURLWAN": "https://www.wanscan.org/tx/",
+          "AddressAppnetURLWAN": "https://www.wanscan.org/address/",
+          "ApiManagementSubscriptionKeyWAN": "c807bf6f64494923862a780a305397a2",
+          "AllowedNetworkWAN": "1",
+          "WandxExchangeFeeRateWAN": 0.00025,
+          "EthExchangeFeeRateWAN": 0.001,
+          "OtherExchageFeeRateWAN": 0.0015,
+          "EtherTokenIdWAN": 7,
+          "EtherTokenAddressWAN": "0xdaa968fed3e255c093aa2730c726119cdc275d47",
+          "WandxTokenIdWAN": 2,
+          "WandxTokenAddressWAN": "0xb247198127ee20e4cd6fe4722b335025004d2b8b",
+          "WandxTokenDecimalsWAN": 18,
+          "OrderBookContractAddressWAN": "0x29fbdaf7786a75d0b82a25e69108b6361ae634e5",
+          "CretaeContractAddressWAN": "0x6d89657326c40d05948a200a369ae58b9491dd20",
+          "protoStorageAddressWAN": "0xf1e040ff72ddea8bc66fd9eaa25176d4b6213d5c",
+          "TrasfersProxyAddressWAN": "0x32b0620ae6b0ff5ed9f3504ca04581a4b6209cf7",
+          "BlockExpirationWindowWAN": 52000,
+          "providerwanURL": "https://mywanwallet.nl/api",
+          "chainid": 1,
+          "gaslimit": 1200000
+        }
+      }
+    }
+  }
+}

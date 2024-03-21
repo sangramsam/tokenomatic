@@ -1,0 +1,614 @@
+<div>
+  <br>
+  <div class="container col-12">
+    <div class="row">
+      <div class="col-xl-12 col-md-12 col-lg-12 col-sm-12 t2">
+        <nav>
+          <ul class="nav nav-pills" style="background: #2a2a2a;line-height: 10px;">
+            <li class="nav-item col-sm" style="padding: 0px;text-align: center;">
+              <a class="nav-link" style="color: greenyellow;padding: 20px;font-size: 20px;">
+                <b>
+                  <span
+                    *ngIf="accountInfo.tokenBalance != 'Fetching...'">{{accountInfo.tokenBalance | number:'1.2'}}</span>
+                  <span *ngIf="accountInfo.tokenBalance == 'Fetching...'">Fetching...</span> &nbsp;
+                  LPT</b> Tokens &nbsp;&nbsp;
+                <button class="tradeNowButton" (click)="modal();">Trade Now</button>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="container col-12">
+    <div class="row">
+      <div class="col-xl-12 col-md-12 col-lg-12 col-sm-12 t2">
+        <nav>
+          <ul class="nav nav-pills" style="background: #2a2a2a;line-height: 10px;">
+            <li class="nav-item col-sm" style="padding: 0px;">
+              <br>
+              <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                  <span class="ra-note">
+                    <span style="text-align: center;">
+                      <h5>Steps to stake on Livepeer:</h5>
+                    </span>
+                    <span style="text-align: left;">
+                      <h6>1. Set Allowance. </h6>
+                    </span>
+                    <span style="text-align: left;">
+                      <h6>2. Select appropriate Orchestrator.</h6>
+                    </span>
+                    <span style="text-align: left;">
+                      <h6>3. Bond with the amount you like.</h6>
+                    </span>
+                    <span style="text-align: left;">
+                      <h6>4. Claim Earnings.</h6>
+                    </span>
+                    <span style="text-align: left;">
+                      <h6>5. Unbond (in the next Round).</h6>
+                    </span>
+                    <span style="text-align: left;">
+                      <h6>6. Withdraw Stake (after 7 more Rounds).</h6>
+                    </span>
+                  </span>
+                </div>
+                <div class="col-md-4"></div>
+              </div>
+              <!-- <span class="ra-note">
+										<span><h5>Steps to stake on Livepeer:</h5> </span>
+										<span><h6>1. Select appropriate orchestrator. Bond with the amount you like.</h6> </span><br />
+										<span><h6>2. Claim Earnings. </h6></span>
+										<span><h6>3. Unbond.</h6> </span>
+										<span><h6>4. Withdraw stake.</h6> </span>
+									</span>	 -->
+              <br>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="container col-12">
+    <div class="row">
+      <div class="col-xl-4 col-md-12 col-lg-4 col-sm-12 t2">
+        <div class="card-body">
+          <div class="row col-12">
+            <p class="col-sm">
+              <b>Bonding Details:</b>
+            </p>
+          </div>
+          <hr style="background-color:white;">
+          <div class="row col-12">
+            <p class="col-sm">Set Allowance:&nbsp;&nbsp;
+              <span>
+                <input type="text" id="lptnumber" size="8" (change)="setAllowanceAmount($event)" />&nbsp;&nbsp;LPT
+
+                &nbsp;&nbsp;&nbsp;
+                <button class="btn" style="background-color: #ffc107;font-weight: bold;"
+                  (click)="setAllowance()">Set</button>
+              </span>
+            </p>
+          </div>
+          <div class="row col-12">
+            <p class="col-sm">Remaining Allowance:&nbsp;&nbsp;
+              <b><span>{{bondInfo.allowance}}</span></b> LPT <br />
+              <span class="ra-note">
+                Note: This value can be higher than your current LPT balance
+              </span>
+            </p>
+          </div>
+          <div class="row col-12">
+            <p class="col-sm">Status:&nbsp;&nbsp;
+              <b><span>{{bondInfo.delegatorStatus}}</span></b>
+            </p>
+          </div>
+          <div class="row col-12">
+            <p class="col-sm">Bonded Amount:&nbsp;&nbsp;
+              <b><span>{{bondInfo.bondedAmount}}</span></b> LPT
+            </p>
+          </div>
+          <div class="row col-12">
+            <p class="col-sm">Last Claimed Round:&nbsp;&nbsp;
+              <b><span>{{bondInfo.lastClaimedRound}}</span></b>
+            </p>
+          </div>
+          <div class="row col-12">
+            <p class="col-sm">Delegated Address:&nbsp;&nbsp;
+              <b><span>{{bondInfo.delegatedAddress}}</span></b>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-12 col-lg-4 col-sm-12 t2">
+        <div class="card-body">
+          <div class="row col-12">
+            <p class="col-sm">
+              <b>
+                Round Details:
+              </b>
+            </p>
+          </div>
+          <hr style="background-color:white;">
+          <div class="row col-12">
+            <p class="col-sm">Current Round:&nbsp;&nbsp;<b><span>{{roundInfo.currentRound}}</span></b></p>
+          </div>
+          <br>
+          <div class="row col-12">
+            <p class="col-sm">Blocks before next
+              Round:&nbsp;&nbsp;<b><span>{{roundInfo.blockCount}}</span></b></p>
+          </div>
+          <br>
+          <div class="row col-12">
+            <p class="col-sm">Status:&nbsp;&nbsp;<b><span>{{roundInfo.roundStatus}}</span></b>&nbsp;&nbsp;
+              <button class="btn" style="background-color: #ffc107;font-weight: bold;"
+                (click)="initializeRound()">Initialize</button>
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-xl-4 col-md-12 col-lg-4 col-sm-12 t2">
+				<div class="card-body">
+					<div style="font-weight: bold;">
+						Claim Earnings
+					</div>
+					<hr style="background-color:white;">
+					<div style="text-align: center;">
+						<div>
+							<b>Unclaimed Earnings</b>
+						</div>
+					</div>
+					<br>
+					<div style="text-align: center">
+						<div style="display: inline-block;">
+							<b>
+								<span *ngIf="bondInfo.unclaimedToken!='Fetching...'"
+									style="font-size: 50px; word-break: break-all;">{{bondInfo.unclaimedToken}}</span>
+								<span *ngIf="bondInfo.unclaimedToken=='Fetching...'">{{bondInfo.unclaimedToken}}</span>
+							</b>
+							<br/>
+							<b>LPT&nbsp;/&nbsp;{{bondInfo.unclaimedFees}}&nbsp;ETH</b>
+						</div>
+					</div>
+					<div style="text-align: left">
+						<div style="display: inline-block;">
+							<br />
+							<span class="ra-note">
+								<span>Note: </span><br />
+								<span>1. Your earnings become 'Claimed' after you have clicked on the button below, otherwise they stay 'Unclaimed'. </span><br />
+								<span>2. You will receive your CLAIMED earnings in your wallet, after you 'Unbond' below. </span><br />
+								<span>3. Your UNCLAIMED earnings will be automatically bonded to </span><br />
+								<span>&nbsp;&nbsp;&nbsp;&nbsp; a. your current orchestrator, if you click on 'Unbond' below. </span><br />
+								<span>&nbsp;&nbsp;&nbsp;&nbsp; b. the next orchestrator you had selected for bonding, after you click on 'Bond' below.</span> 
+							</span>								
+							<br />
+						</div>
+					</div>
+					<br>
+					<div style="text-align: center">
+						<div style="display: inline-block;">
+							<button class="btn" [ngClass]="bondInfo.unclaimedFees>0 ? claimEnable:claimDisable"
+								(click)="claimEarnings()">Claim</button>
+						</div>
+					</div>
+				</div>
+			</div> -->
+      <div class="col-xl-4 col-md-12 col-lg-4 col-sm-12 t2">
+        <div class="card-body">
+          <div style="font-weight: bold;">
+            Claim Earnings
+          </div>
+          <hr style="background-color:white;">
+          <div style="text-align: center;">
+            <div>
+              <b>Unclaimed Earnings</b>
+            </div>
+          </div>
+          <br>
+          <div style="text-align: center">
+            <div style="display: inline-block;">
+              <b>
+                <span *ngIf="bondInfo.unclaimedToken!='Fetching...'" style="font-size: 50px; word-break: break-word"
+                  [matTooltip]="bondInfo.unclaimedToken"
+                  [matTooltipPosition]="'below'">{{bondInfo.unclaimedToken | number:'1.1-6'}}</span>
+                <span *ngIf="bondInfo.unclaimedToken=='Fetching...'">{{bondInfo.unclaimedToken}}</span>
+              </b>
+              <br />
+              <b>LPT&nbsp;/&nbsp;{{bondInfo.unclaimedFees}}&nbsp;ETH</b>
+            </div>
+          </div>
+          <div style="text-align: left">
+            <div style="display: inline-block;">
+              <br />
+              <span class="ra-note">
+                <span>Note: </span><br />
+                <span>1. Your earnings become 'Claimed' and get added to your currently bonded amount, after you click
+                  on the button below, otherwise they stay 'Unclaimed'. </span><br />
+                <span>2. You can receive your previously CLAIMED earnings in your wallet, after you 'Unbond' below.
+                </span><br />
+                <span>3. Your UNCLAIMED earnings will be automatically bonded to </span><br />
+                <span>&nbsp;&nbsp;&nbsp;&nbsp; a. your current orchestrator, if you click on 'Unbond' below.
+                </span><br />
+                <span>&nbsp;&nbsp;&nbsp;&nbsp; b. the next orchestrator you had selected for bonding, after you click on
+                  'Bond' below.</span><br />
+                <span>4. The only advantage of claiming your earnings is that you'll be able to include these claimed
+                  earnings in the amount you unbond the next time.</span>
+              </span>
+              <br />
+            </div>
+          </div>
+          <br>
+          <div style="text-align: center">
+            <div style="display: inline-block;">
+              <button class="btn" [ngClass]="bondInfo.unclaimedFees>0 ? 'claimEnable':'claimDisable'"
+                (click)="claimEarnings()">Claim</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="container col-12">
+    <div class="row">
+      <div class="col-xl-12 col-md-12 col-lg-12 col-sm-12 t2">
+        <div class="card-body">
+          <div class="row col-12">
+            <div class="col-sm-6">
+              <b><span style="font-size: 18px;">Select Orchestrator</span></b>
+            </div>
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col-6"></div>
+                <div class="col-6">
+                  <div class="row">
+                    <div class="col-6"></div>
+                    <div class="col-6">
+                      <div class="contentRightMove filterColor">
+                        <button style="background-color: transparent;border-color: transparent">&nbsp;<span
+                            style="color: white;">Filter&nbsp;&nbsp;</span><img
+                            src="../../../assets/images/icon-chevron-down.png"
+                            style="background-color: transparent; height:17px;"></button>
+                        <!-- <select [(ngModel)]="bondTokenFilter" (change)="setSelectedExchange()" class="btn1 btn-success1 dropdown-toggle filterColor">
+															<option value="" disabled="" selected="">Filter</option>
+															<option *ngFor="let e of bondTokenOptions ; let i = index" [ngValue]="e">{{e.name}}</option>
+														</select> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12 col-md-12 col-lg-12 col-sm-12 t2">
+        <div class="card-body">
+          <div class="row col-12 table-responsive">
+            <table id="bondTable" class="col-12 table" style="text-align: center;">
+              <thead>
+                <tr style="color: #aae5fc;">
+                  <th style="text-align: left;border-bottom-color: #aae5fc;">Orchestrators</th>
+                  <th style="border-bottom-color: #aae5fc;">Total Stake</th>
+                  <th style="border-bottom-color: #aae5fc;">Fee Share <i class="fa fa-question-circle"
+                      aria-hidden="true"
+                      matTooltip="Percentage of the earned fees in ETH, that the orchestrator will distribute among its delegators, depending upon the amount they delegate/stake, relative to other delegators. You become a delegator after you delegate/stake towards an orchestrator."
+                      [matTooltipPosition]="'below'"></i></th>
+                  <th style="border-bottom-color: #aae5fc;">Reward Share <i class="fa fa-question-circle"
+                      aria-hidden="true"
+                      matTooltip="Percentage of the newly minted LPT from the round's inflation distribution, that the orchestrator will distribute among its delegators, depending upon the amount they delegate/stake, relative to other delegators. You become a delegator after you delegate/stake towards an orchestrator."
+                      [matTooltipPosition]="'below'"></i></th>
+                  <th style="border-bottom-color: #aae5fc;">Bond Token</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="transcodersInfo.length>0">
+                <tr
+                  *ngFor="let transcoder of transcodersInfo | paginate:{ itemsPerPage: 5, currentPage:txcoderPage }; let i = index;">
+                  <td style="text-align: left">
+                    <img class="avatarImage" src="../../../assets/images/blockies.png" />
+                    <!-- <angular-blockies [options]="blockiesOptions"></angular-blockies> -->
+                    &nbsp;{{ transcoder.transcoder | slice:0:10}} ...
+                  </td>
+                  <td>
+                    <span>
+                      {{transcoder.totalStake | number:'1.1-4' }} LPT
+                    </span>
+                  </td>
+                  <td>{{transcoder.feeShare}}</td>
+                  <td>{{transcoder.rewardCut}}</td>
+                  <td>
+                    <span class="radioButtonStyle">
+                      <!-- id="portfolioRadioSelect{{ ((currentShowingPage-1)*5)+i }}" -->
+                      <input type="radio" name="radioselector" id="{{i}}"
+                        [checked]="transcoderInfo.transcoder==transcoder.transcoder"
+                        (click)="setDelegatedAddress(transcoder);" />
+                      <!-- for="portfolioRadioSelect{{ ((currentShowingPage-1)*5)+i }}" -->
+                      <label for="{{i}}"></label>
+                      <div class="check"></div>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="row" *ngIf="transcodersInfo.length>0">
+              <div class="col-5"></div>
+              <div class="col-2" style="text-align: center;">
+                <div style="display: inline-block;">
+                  <span *ngIf="txcoderPage>1" class="clickStyle" (click)="txcoderPage=txcoderPage-1;">
+                    <img src="../../../assets/images/prev_nav.png" style="height: 20px;">
+                    &nbsp;&nbsp;</span> <span *ngIf="txcoderPage!=1">
+                    {{ txcoderPage-1 }}&nbsp;&nbsp;
+                  </span>
+                  <span *ngFor="let txPage of txPages | paginate:{ itemsPerPage:1, currentPage:txcoderPage};">
+                    <span class="ActivePage"><span class="ActivePageNumber">{{txPage}}</span></span>
+                    &nbsp;&nbsp;
+                  </span>
+                  <span *ngIf="txcoderPage < txPages.length;">{{ txcoderPage+1 }}&nbsp;&nbsp;</span>
+                  <span *ngIf="txcoderPage<txPages.length;" class="clickStyle" (click)="txcoderPage=txcoderPage+1">
+                    <img src="../../../assets/images/next_nav.png" style="height: 20px;">
+                  </span>
+                </div>
+              </div>
+              <div class="col-5"></div>
+            </div>
+            <div class="loader" style="width: 100%!important;" *ngIf="transcodersInfo.length==0">
+              <div class="loader">
+                <!-- <h3>Transcoders Loading ...</h3>
+								<br/> -->
+                <img class="img img-responsive" src="assets/images/tt-loader.png  " alt=""
+                  style="width:100px;margin-left:45%;margin-top:40px;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="container col-12">
+    <div class="row">
+      <div class="col-xl-6 col-md-6 col-lg-6 col-sm-6 t2">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+              <div style="text-align: center;" [ngClass]="canBondShow?'':'disableOpacity'">
+                <br />
+                <span style="display: inline-block;">What amount would you like to bond?</span>
+                <br />
+                <br />
+                <span class="ra-note">
+                  Note: Your final bonded amount = current bonded amount(if any) + UNCLAIMED earnings(if any) + amount
+                  you enter below
+                </span>
+                <br />
+                <br />
+                <input type="text" matInput class="inputStyle" (change)="setBondAmount($event)" size="14"
+                  max-size="14" />&nbsp;LPT
+                <br />
+                <br />
+                <div *ngIf="canBondShow && bondError1">
+                  <span class="infosymbol"><span class="infoLetter">i</span></span>
+                  <span class="infoText">
+                    <span>
+                      Please initialize Status in Round Details section first and then
+                      set allowance in Bonding Details section to start bonding
+                    </span>
+                  </span>
+                </div>
+                <div *ngIf="canBondShow && !bondError1 && bondError2">
+                  <span class="infosymbol"><span class="infoLetter">i</span></span>
+                  <span class="infoText">
+                    <span>
+                      Enter amount lesser than your remaining allowance and total LPT tokens
+                    </span>
+                  </span>
+                </div>
+                <br />
+              </div>
+              <div style="text-align: center;">
+                <button class="bondButton" [ngClass]="canBondShow?'bondEnableStyle':'bonddisbleStyle'"
+                  [ngStyle]="{'color':canBondShow ? 'black' : 'white' }" (click)="bondToken();">Bond</button>
+              </div>
+            </div>
+            <div class="col-2"></div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="col-xl-6 col-md-6 col-lg-6 col-sm-6 t2">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+              <div style="text-align: center;" [ngClass]="canUnbondShow?'':'disableOpacity'">
+                <br />
+                <span style="display: inline-block;">What amount would you like to unbond?</span>
+                <br />
+                <br />
+                <span class="ra-note">
+                  Note: This is to initiate the withdrawal process period of approx. 7 days, of amount you enter below +
+                  CLAIMED earnings. Then you can directly transfer the unbonded amount into your wallet.</span> <br />
+                <br />
+                <input type="text" class="inputStyle" matInput size="14" (change)="setUnbondAmount($event)"
+                  max-size="14" />
+                <span>&nbsp;LPT</span>
+                <br />
+                <br />
+                <div *ngIf="canUnbondShow && unBondError1">
+                  <span class="infosymbol"><span class="infoLetter">i</span></span>
+                  <span class="infoText">
+                    <span>Please initialize Status in Round Details section first to start
+                      unbonding
+                    </span>
+                  </span>
+                </div>
+                <div *ngIf="canUnbondShow && !unBondError1 && unBondError2">
+                  <span class="infosymbol"><span class="infoLetter">i</span></span>
+                  <span class="infoText">
+                    <span>You can’t unbond more than you have bonded</span>
+                  </span>
+                </div>
+                <br />
+              </div>
+              <div style="text-align: center;">
+                <button class="bondButton" [ngClass]="canUnbondShow?'bondEnableStyle':'bonddisbleStyle'"
+                  [ngStyle]="{'color':canUnbondShow ? 'black' : 'white' }" (click)="unbondToken();">Unbond</button>
+              </div>
+            </div>
+            <div class="col-2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div *ngIf="unbondingTxns.length > 0" class="container col-12">
+    <div class="row">
+      <div class="col-xl-12 col-md-12 col-lg-12 col-sm-12 t2">
+        <div class="card-body">
+          <div class="row col-12">
+            <h5><span style="font-weight: bold;">Withdraw Stake</span></h5>
+            <br />
+            <div class="table-responsive">
+              <table class="col-12 table" style="text-align: center;" id="withdrawTable">
+                <thead>
+                  <tr style="color: #aae5fc;">
+                    <th style="text-align: left;border-bottom-color: #aae5fc;">Amount</th>
+                    <th style="border-bottom-color: #aae5fc;">Current Round</th>
+                    <th style="border-bottom-color: #aae5fc;">Withdraw After Round</th>
+                    <th style="border-bottom-color: #aae5fc;">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let txn of unbondingTxns">
+                    <td style="text-align: left;">{{txn.amount}} LPT</td>
+                    <td>{{roundInfo.currentRound}}</td>
+                    <td>{{txn.round}}</td>
+                    <td><button
+                        [ngClass]="roundInfo.currentRound > txn.round ? 'withdrawButton':'withdrawDisableButton'"
+                        (click)="withdrawStake(txn.id)">Withdraw Stake</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="buymodal" *ngIf="insatantBuyModal">
+  <div class="modal fade in portfolio-dialogue" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+      <div class="modal-content">
+        <!-- [ngClass]="switchThemeService.switchTheme ? 'modal-content darkThemeModal-Content':'modal-content' " -->
+        <div class="modal-header"
+          style="padding: 10px; background-image: linear-gradient(to bottom, #533dbd, #59357e);">
+          <!-- <div class="row"> -->
+          <h4 class="modal-title w-100 text-center" style="color: white;margin: 0 auto">Trade</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="z-index: 999;color: white;"
+            (click)="closeInstantbuyModal()">
+            &#10005;
+            <!-- <span aria-hidden="true"><i class="fa fa-times"></i></span> -->
+          </button>
+          <!-- </div> -->
+        </div>
+        <div class="modal-body" style="padding: 45px!important;">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-8">
+                <div *ngIf="accountInfo.ethBalance != 'Fetching...'" class="form-group">
+                  <input readonly class="form-control ds" style="color: #000000;font-weight: bold;"
+                    value="Balance: {{ accountInfo.ethBalance | number:'1.4' }} ETH">
+                </div>
+              </div>
+              <div class="col-sm-4"></div>
+            </div>
+
+            <div class="row">
+              <table id="tradeTable" class="table">
+                <thead>
+                  <tr>
+                    <th class="head-left-align">Token</th>
+                    <th class="head-vert-align">Current Price (ETH)</th>
+                    <th class="head-vert-align">Enter Quantity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="body-left-align">LPT</td>
+                    <td class="body-vert-align">{{apiHistBuy}}</td>
+                    <td class="body-vert-align">
+                      <div style="top:50%;display: inline-block"><input type="Number" style="text-align:center;"
+                          id="quantity" [(ngModel)]="lptquantity" class="form-control de">
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th class="foot-left-align">Total Value:</th>
+                    <th class="foot-vert-align"></th>
+                    <th class="foot-vert-align"><span *ngIf="lptquantity>0;">{{apiHistBuy*lptquantity}}</span></th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+
+          <div class="container" *ngIf="bestrate">
+            <p class="best-trade">Best trade rates for you</p>
+
+            <br>
+            <div class="row" style="padding-right: 0px;">
+              <div class="col-sm">
+                <div class="card">
+                  <span>ETH to LPT</span>
+                  <span>Uniswap</span>
+                  <p>{{etherToBuyToken}} ETH</p>
+                </div>
+              </div>
+              <!-- <div class="col-sm">
+								<div class="card">
+									<span>ETH to KNC</span>
+									<span>0x Relayer</span>
+									<p>4.5015545557446546 KNC</p>
+								</div>
+							</div> -->
+            </div>
+            <br>
+            <div style="text-align: center;">
+              <button class="btn btn-custom btn-justify dd" (click)="buyLpt()">Buy Best
+                Rate</button>
+            </div>
+          </div>
+          <br><br>
+          <div style="text-align: center;" *ngIf="traderate">
+            <button class="btn btn-custom btn-justify dd" (click)="checkUniswap();">Check Trade
+              Rates</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade in"></div>
+</div>
+<div class="popup-box" [ngStyle]="{'display':displayGif}">
+  <div class="popup-gif">
+    <div class="popup_header">Please Wait</div>
+    <div class="popup_content">
+      <div class="popup_sub">
+        <img class="img img-responsive gif-img" src="assets/images/tt-loader.png  " alt="" style="width: 100px;">
+      </div>
+      <div class="gif_footer">Please wait while the transaction confirms on the Blockchain</div>
+    </div>
+  </div>
+</div>

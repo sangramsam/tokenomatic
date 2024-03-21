@@ -1,0 +1,17 @@
+
+
+.main-content {
+	/*margin-left: 6vw;*/
+	margin-left: 50px;
+
+	/*padding: 10px;
+	width: calc(100% - 140px); *//* 100% - (margin-left + 2* padding) */
+}
+
+/*@media (max-width: 1267px) {
+	.main-content {
+		margin-left: 76px;
+		padding: 10px;
+		width: calc(100% - 140px); *//* 100% - (margin-left + 2* padding) 
+	}
+}*/

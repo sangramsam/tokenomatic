@@ -1,0 +1,56 @@
+<div class="container col-12 container1">
+  <div class="container row col-12 container21">
+    <exchange-wallet-select-inline></exchange-wallet-select-inline>
+  </div>
+  <div class="container col-12 portfolioPage">
+    <div class="tabcontent darkTheamebackgroundColor">
+      <div id="tab2" class="tab active">
+        <nav>
+          <ul class="nav-tablinks darkTheamebackgroundColor">
+            <li
+              class="nav-tab active"
+              (click)="setVisibleTab('livepeer')"
+              [ngClass]="{ active: isTabVisible('livepeer') }"
+            >
+              <span>Livepeer</span>
+              <div class="border-animation "></div>
+            </li>
+            <li
+              class="nav-tab active"
+              (click)="setVisibleTab('tezos')"
+              [ngClass]="{ active: isTabVisible('tezos') }"
+            >
+              <span>Tezos</span>
+              <div class="border-animation "></div>
+            </li>
+            <!-- <li class="nav-tab active" (click)="setVisibleTab('eos');" [ngClass]="{'active': isTabVisible('eos')}">
+				            <span>EOS</span>
+				            <div class="border-animation "></div>
+				        </li> -->
+          </ul>
+        </nav>
+        <section>
+          <app-livepeer-staking
+            *ngIf="selectedExchange == 'eth' && isTabVisible('livepeer')"
+          ></app-livepeer-staking>
+          <app-tezos-staking
+            *ngIf="selectedExchange == 'tezos' && isTabVisible('tezos')"
+          ></app-tezos-staking>
+          <div *ngIf="selectedExchange != 'eth' && isTabVisible('livepeer')">
+            <div class="content">
+              <p>Select 'ETH' as exchange to continue</p>
+            </div>
+          </div>
+          <div *ngIf="selectedExchange != 'tezos' && isTabVisible('tezos')">
+            <div class="content">
+              <p>Select 'TEZOS' as exchange to continue</p>
+            </div>
+          </div>
+          <div *ngIf="isTabVisible('eos')">
+            <div class="content"><p>Coming Soon</p></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

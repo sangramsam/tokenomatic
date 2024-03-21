@@ -1,0 +1,25 @@
+<!-- Main Layout -->
+<simple-notifications [options]="options"></simple-notifications>
+<div>
+  <!-- <app-header></app-header> -->
+  <mini-view *ngIf="false" (showMainContent)="onShowMainContent($event)"></mini-view>
+  <!-- <app-firsttime *ngIf = '!check' [updateFirstInitialize]="updateFirstInitialize"></app-firsttime> -->
+  <div *ngIf="true">
+    <sidebar></sidebar>
+    <main-content></main-content>
+    <div class="popup-box" [ngStyle]="{ display: EthBasketService.displaybask_loader }">
+      <div class="popup-gif">
+        <div class="popup_header">Please Wait</div>
+        <div class="popup_content">
+          <div class="popup_sub">
+            <img class="img img-responsive gif-img" src="assets/images/tt-loader.png  " alt="" style="width: 100px;" />
+          </div>
+          <div class="gif_footer">
+            PLEASE WAIT. DO NOT CLOSE THE DESKTOP APPLICATION, WHILE THIS LOADER
+            LOADS
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+<div>
+  <div style="margin-bottom: 10px;">
+    <select
+      [(ngModel)]="selectedExchange"
+      (change)="setSelectedExchange()"
+      class="btn1 btn-success1 dropdown-toggle"
+    >
+      <option value="" disabled="" selected="">Select Exchange</option>
+      <option *ngFor="let e of exchanges; let i = index" [ngValue]="e">{{
+        e.name
+      }}</option>
+    </select>
+  </div>
+  <!-- <div
+    style="margin-bottom: 10px;"
+    *ngIf="getSelectedExchange() && hasLedgerSupport()"
+  >
+    <button class="ledger-btn" (click)="fetchHDWallets()">
+      Use Wallets from Ledger
+    </button>
+  </div> -->
+  <select
+    class="btn1 btn-success1 dropdown-toggle"
+    #selectElem
+    (change)="onSelectChange()"
+    [(ngModel)]="selectedWallet"
+    style="min-width: 100%;max-width: 100%;"
+  >
+    <option value="" disabled="" selected=""
+      >Select Wallet <span *ngIf="selectedExchange?.name">({{selectedExchange?.name}})</span></option
+    >
+    <optgroup label="Wallets" *ngIf="wallets.length">
+      <option
+        *ngFor="let w of wallets; let i = index"
+        [ngValue]="w"
+        (click)="requestForTheme(w)"
+        >{{ w.walletName }} - {{ w.getAddress() }}</option
+      >
+    </optgroup>
+
+    <!-- <optgroup label="Ledger Wallets" *ngIf="hdWallets.length">
+      <option
+        *ngFor="let w of hdWallets; let i = index"
+        [ngValue]="w"
+        (click)="requestForTheme(w)"
+        >{{ w.walletName }} - {{ w.getAddress() }}</option
+      >
+    </optgroup> -->
+  </select>
+  <div style="margin-top: 15px;margin-bottom: 15px;">
+    <input
+      *ngIf="selectedWallet && !selectedWallet.isDecrypted"
+      autofocus
+      type="password"
+      class="form-control"
+      [(ngModel)]="password"
+      placeholder="Wallet Password"
+      (keyup.enter)="useWalletFullscreen()"
+    />
+    <span *ngIf="passwordError.required">Password is required</span>
+    <span *ngIf="passwordError.invalid">Please verify your password.</span>
+  </div>
+  <app-loading-spinner
+    *ngIf="showSpinner"
+    [loaderClass]="'dark margin-auto'"
+  ></app-loading-spinner>
+  <div class="col-12" *ngIf="!showSpinner">
+    <button
+      class="sign-publish-portfolio-button"
+      style="width: 50%;padding: 0px;margin-bottom: 10px;margin-top: 10px;"
+      [disabled]="shouldDisableBtnFS()"
+      (click)="useWalletFullscreen()"
+    >
+      Use Wallet
+    </button>
+  </div>
+  <div class="col-12" *ngIf="!showSpinner">
+    <button
+      class="sign-publish-portfolio-button"
+      style="width: 50%;padding: 0px;margin-bottom: 10px;margin-top: 10px;"
+      (click)="cancel()"
+      *ngIf="showCancel"
+    >
+      Cancel
+    </button>
+  </div>
+</div>

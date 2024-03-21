@@ -1,0 +1,21 @@
+.neoStake{
+  width: 100%;
+  display: inline-block;
+  position: relative;
+  /*height: 100vh;*/
+  color: white;
+}
+.neoStake .stake{
+  background-color: #212121;
+  padding: 10px;
+}
+
+
+button {
+	background-color: #000;
+    border-color: #000;
+}
+
+.stake {
+	border-radius: 5px;
+}

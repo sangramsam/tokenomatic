@@ -1,0 +1,68 @@
+<div class="dashboard-recentactivity">
+	<div class="table-container">
+		<table class="table">
+			<thead>
+				<th>Chain</th>
+				<th>Wallet</th>
+				<!-- <th>Token</th> -->
+				<th>Symbol</th>
+				<th>Balance</th>
+				<th>Actions</th>
+			</thead>
+			<tbody *ngIf="itemLists.length==0">
+				<tr>
+					<td colspan="9" class="no-data">
+						<h5>No Wallet Information</h5>
+					</td>
+				</tr>
+			</tbody>
+			<tbody *ngIf="itemLists.length>0">
+				<tr
+					*ngFor="let activity of itemLists | paginate : {itemsPerPage : 9, currentPage : currentPage, id : 'activities'}; index as i">
+					<td style="width: 30px;padding-left: 0;padding-right: 0">{{currentWallet.exchange}}</td>
+					<td [class.padding-tb]="i == 0">{{currentWallet.walletName}}</td>
+					<!-- <td [class.padding-tb]="i == 0">{{activity.tokenName}}</td> -->
+					<td [class.padding-tb]="i == 0">{{activity.itemName}}</td>
+					<td [class.padding-tb]="i == 0">{{activity.balance | number : '1.1-2'}}</td>
+					<!-- <td [class.red]="activity.change < 0" [class.green]="activity.change > 0" [class.padding-tb]="i == 0">{{activity.change | number : '1.1-2'}}%</td> -->
+					<td class="action-btn-td" [class.padding-tb]="i == 0">
+						<div class="action-btn action-btn-up">Deposit</div>
+						<div class="action-btn action-btn-down">Withdraw</div>
+						<div class="action-btn action-btn-exchange" style="cursor: pointer;" routerLink="/exchange">
+							Trade</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="row" *ngIf="itemLists.length>0">
+		<div class="col-md-12">
+			<div class="pull-right">
+				<input [(ngModel)]="filter" placeholder="Search" class="form-control"
+					(ngModelChange)="updateSearchItems()" />
+				<pagination-template #p="paginationApi" [id]="'itemLists'" (pageChange)="currentPage = $event"
+					maxSize="5">
+					<div class="custom-pagination">
+						<div class="pagination-btn">
+							<button [disabled]="p.isFirstPage()" (click)="p.previous()"><i
+									class="fa fa-chevron-left"></i></button>
+						</div>
+						<div class="pagination-btn" *ngFor="let page of p.pages"
+							[class.current]="p.getCurrent() === page.value">
+							<button (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
+								<span>{{ page.label }}</span>
+							</button>
+							<button *ngIf="p.getCurrent() === page.value">
+								<span>{{ page.label }}</span>
+							</button>
+						</div>
+						<div class="pagination-btn">
+							<button [disabled]="p.isLastPage()" (click)="p.next()"><i
+									class="fa fa-chevron-right"></i></button>
+						</div>
+					</div>
+				</pagination-template>
+			</div>
+		</div>
+	</div>
+</div>

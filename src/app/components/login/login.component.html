@@ -1,0 +1,31 @@
+<div class="login">
+	<div class="form-elements"> 
+		<h3 class="heading">Log in to your Account</h3>
+		<h4 class="sub-heading">Welcome back!</h4>
+		<h4 class="sub-heading">Please login to your account</h4>
+		<form novalidate (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+			<div class="form-group">
+				<input name="email" class="form-control" placeholder="Email" formControlName="email"/>
+				<small class="error" *ngIf="loginForm.get('email').dirty == true && loginForm.get('email').errors && loginForm.get('email').errors.required == true">Email is required</small>
+				<!-- <small class="error" *ngIf="loginForm.get('email').dirty == true && loginForm.get('email').errors && loginForm.get('email').errors.email == true && loginForm.get('email').errors.pattern==false && loginForm.get('email').errors.required != true">Please enter a valid email</small> -->
+				<small class="error" *ngIf="loginForm.get('email').errors?.pattern">Please enter a valid email</small>
+			</div>
+			<div class="form-group">
+				<input name="password" type="password" class="form-control" placeholder="Password" formControlName="password"/>
+				<small class="error" *ngIf="loginForm.get('password').dirty == true && loginForm.get('password').errors && loginForm.get('password').errors.required == true">Password is required</small>
+			</div>
+			<div class="form-group remember">
+				<input type="checkbox" id="remember" ngValue="true" (change)="selectBadge($event)" formControlName="rememberme" name="rememberme"> <label for="remember">Remember me</label>
+				<a class="forgot-password" (click)="setActivePage('forgot-password')" [class.disabled]="isLoading">Forgot Password</a>
+			</div>
+			<div *ngIf="serverError" class="error text-center">{{serverError}}</div>
+			<div class="form-group btn-group">
+				<button [disabled]="isLoading" class="button login-btn" type="submit">Login <i class="fa fa-spin fa-spinner" *ngIf="isLoading"></i></button>
+				<button [disabled]="isLoading" class="button signup-btn" type="button" (click)="setActivePage('register')">Sign up</button>
+			</div>
+		</form>
+	</div>
+	<div class="footer-text">
+		<span (click)="setActivePage('terms-of-service')" [class.disabled]="isLoading">Terms of use. Privacy Policy</span>
+	</div>
+</div>

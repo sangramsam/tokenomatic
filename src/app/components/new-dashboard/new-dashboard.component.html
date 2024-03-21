@@ -1,0 +1,58 @@
+<exchange-wallet-select-inline></exchange-wallet-select-inline>
+<div class="newDash">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-9">
+                <div class="ticker">
+                    <div class="col" style="padding:0">
+                        <coingecko-coin-price-marquee-widget coin-ids="bitcoin,ethereum,eos,ripple,litecoin"
+                            currency="usd" background-color="#ffffff" locale="en"></coingecko-coin-price-marquee-widget>
+                    </div>
+                </div>
+
+                <div class="basket1">
+                    <div class="col">
+                        <h2>Basket</h2>
+                        <div *ngIf="t">
+                            <app-basket-dashboard></app-basket-dashboard>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col">
+                            <h2>Basket 1</h2>
+                        </div>
+                        <div class="col">
+                            <h2>Basket 1</h2>
+                        </div>
+                        <div class="col">
+                            <h2>Basket 1</h2>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="basket2">
+                    <div class="col">
+                        <h4>My Basket</h4>
+                        <div *ngIf="t">
+                            <app-my-basket-dashboard></app-my-basket-dashboard>
+                        </div>
+                    </div>
+                </div>
+                <div class="basket3">
+                    <div class="col">
+                        <h4>Token list</h4>
+                        <div>
+                            <dashboard-recentactivity [update]="t"></dashboard-recentactivity>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-3">
+                <iframe src="https://tokenomatic.s3.us-east-2.amazonaws.com/index.html" title="News"
+                    style="width:100%;height:100%">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+.portfolio-breakdown {
+	height: 100%;
+	box-shadow: 0 2px 3px 0px black;
+	border-radius: 1px;
+	background-color: #2c2c2c;
+}
+
+#portfolio-breakdown {
+	height: 100%;
+}

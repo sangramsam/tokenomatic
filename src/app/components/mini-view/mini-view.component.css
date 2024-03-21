@@ -1,0 +1,36 @@
+.mini-view {
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+	text-align: center;
+}
+.centered-container {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	right: 0;
+	transform: translateY(-50%);
+	height: 600px;
+}
+.col {
+	display: inline-block;
+	height: 600px;
+	width: 500px;
+	vertical-align: middle;
+}
+.col:nth-child(2) {
+	background: #2c2c2c;
+	margin-left: -4px;
+}
+.logo-container {
+	background-image: linear-gradient(to bottom left, #000, #000);
+	position: relative;
+}
+.logo-container img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 350px;
+	height: 282px;
+}

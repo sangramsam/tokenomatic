@@ -1,0 +1,94 @@
+<div class="register">
+	<div class="form-elements">
+		<h3 class="heading">Register an Account</h3>
+		<h4 class="sub-heading">
+			<span *ngIf="currentForm == 'register'">
+				Sign-up for Referrals, Achievements, and Competitions
+			</span>
+			<span *ngIf="currentForm == 'verify'">
+				Account Verification
+			</span>
+			<span *ngIf="currentForm == 'verify-success'">
+				Email Verification completed!!
+			</span>
+		</h4>
+		<form novalidate (ngSubmit)="onSubmit()" [formGroup]="registerForm" *ngIf="currentForm =='register'">
+			<div class="form-group">
+				<input name="email" class="form-control" placeholder="Email" formControlName="email" />
+				<small class="error" *ngIf="registerForm.get('email').dirty == true && registerForm.get('email').errors && registerForm.get('email').errors.required == true">Email
+					is required</small>
+				<!-- <small class="error" *ngIf="registerForm.get('email').dirty == true && registerForm.get('email').errors && registerForm.get('email').errors.email == true && registerForm.get('email').errors.required != true">Please
+					enter a valid email</small> -->
+					<small class="error" *ngIf="registerForm.get('email').errors?.pattern">Please
+						enter a valid email</small>
+			</div>
+			<div class="form-group">
+				<!-- <input name="username" class="form-control" placeholder="Username" formControlName="username"/>
+				<small class="error" *ngIf="registerForm.get('username').dirty == true && registerForm.get('username').errors && registerForm.get('username').errors.required == true">Username is required</small> -->
+			</div>
+			<div class="form-group">
+				<input name="password" type="password" class="form-control" placeholder="Password" formControlName="password" />
+				<small class="error" *ngIf="registerForm.get('password').dirty == true && registerForm.get('password').errors && registerForm.get('password').errors.required == true">Password
+					is required</small>
+				<small class="error" *ngIf="registerForm.get('password').dirty == true && registerForm.get('password').errors && registerForm.get('password').errors.lowercase == true">Password
+					should contain atleast one of 'a-z'</small>
+				<small class="error" *ngIf="registerForm.get('password').dirty == true && registerForm.get('password').errors && registerForm.get('password').errors.caps == true">Password
+					should contain atleast one of 'A-Z'</small>
+				<small class="error" *ngIf="registerForm.get('password').dirty == true && registerForm.get('password').errors && registerForm.get('password').errors.number == true">Password
+					should contain atleast one of '0-9'</small>
+				<small class="error" *ngIf="registerForm.get('password').dirty == true && registerForm.get('password').errors && registerForm.get('password').errors.specialCharacter == true">Password
+					should contain atleast one special characted(!@#\$%\^&\*)</small>
+				<small class="error" *ngIf="registerForm.get('password').dirty == true && registerForm.get('password').errors && registerForm.get('password').errors.length == true">Password
+					should contain atleast '8' characters long</small>
+			</div>
+			<div class="form-group">
+				<input name="confirmpassword" type="password" class="form-control" placeholder="Confirm Password" formControlName="confirmPassword" />
+				<small class="error" *ngIf="registerForm.get('confirmPassword').dirty == true && registerForm.get('confirmPassword').errors && registerForm.get('confirmPassword').errors.required == true">Confirm
+					Password is required</small>
+				<small class="error" *ngIf="registerForm.get('confirmPassword').dirty == true && registerForm.get('confirmPassword').errors && registerForm.get('confirmPassword').errors.notmatch == true">Password
+					does not match the confirm password.</small>
+			</div>
+			<div class="form-group agreetoterms">
+				<input type="checkbox" id="agreetoterms" ngValue="true" formControlName="agreetoterms" name="agreetoterms"> <label
+				 for="agreetoterms">I agree with the terms and conditions</label>
+				<small class="error-checkbox" *ngIf="registerForm.get('agreetoterms').dirty == true && registerForm.get('agreetoterms').errors && registerForm.get('agreetoterms').errors.required == true">Required.</small>
+			</div>
+			<div *ngIf="serverSignUpError" class="error2 text-center">{{serverSignUpError}}</div>
+			<div class="form-group btn-group">
+				<button [disabled]="isLoading" class="button signup-btn" type="submit">Sign up <i class="fa fa-spin fa-spinner" *ngIf="isLoading"></i></button>
+				<br/>
+				<a class="login-link" (click)="showForm('verify')" [class.disabled]="isLoading">Have a verification code? <span class="color"> Verify.</span></a>
+				<br/>
+				<a class="login-link" (click)="setActivePage('login')" [class.disabled]="isLoading">Already have an account? <span class="color"> Sign in.</span></a>
+			</div>
+		</form>
+		<form novalidate (ngSubmit)="onVerifySubmit()" [formGroup]="registerVerifyForm" *ngIf="currentForm =='verify'">
+			<div class="form-group" *ngIf="!userEmail">
+				<input name="email" class="form-control" placeholder="Email" formControlName="email" />
+				<small class="error" *ngIf="registerVerifyForm.get('email').dirty == true && registerVerifyForm.get('email').errors && registerVerifyForm.get('email').errors.required == true">Email
+					is required</small>
+				<small class="error" *ngIf="registerVerifyForm.get('email').dirty == true && registerVerifyForm.get('email').errors && registerVerifyForm.get('email').errors.email == true && registerVerifyForm.get('email').errors.required != true">Please
+					enter a valid email</small>
+			</div>
+			<div class="form-group">
+				<input name="text" class="form-control" placeholder="Verification Code" formControlName="verification-code" />
+				<small class="error" *ngIf="registerVerifyForm.get('verification-code').dirty == true && registerVerifyForm.get('verification-code').errors && registerVerifyForm.get('verification-code').errors.required == true">Verification
+					Code is required</small>
+			</div>
+			<div *ngIf="serverVerificationError" class="error2">{{serverVerificationError}}</div>
+			<div class="form-group btn-group">
+				<button [disabled]="isLoading" class="button signup-btn" type="submit">Verify <i class="fa fa-spin fa-spinner" *ngIf="isLoading"></i></button>
+				<br>
+				<a class="login-link color" (click)="showForm('register')" [class.disabled]="isLoading">Back to SignUp</a>
+			</div>
+		</form>
+		<form *ngIf="currentForm =='verify-success'">
+			<div class="form-group btn-group">
+				<button class="button signup-btn" (click)="setActivePage('login')">SignIn</button>
+			</div>
+		</form>
+	</div>
+	<div class="footer-text">
+		<span (click)="setActivePage('terms-of-service')" [class.disabled]="isLoading">Terms of use. Privacy Policy</span>
+	</div>
+</div>

@@ -1,0 +1,166 @@
+.portfolioPage {
+  /*width: 100%;
+  display: inline-block;
+  position: relative;
+  height: 100vh;
+  top: -20px;*/
+  background: transparent;
+  padding-top: 30px;
+  /*padding-bottom: 50px;*/
+}
+
+.tabcontent {
+  padding-bottom: 10px;
+  min-height: calc(100% - 102px);
+  background: #FAF8F8;
+}
+.active-btn{
+  border-bottom: 3px solid purple!important;
+}
+.tabcontent .tab {
+  display: none;
+}
+
+.tabcontent .tab.active {
+  display: block;
+  position: relative;
+}
+
+.tabcontent .token-holder {
+  background-color: #F3F3F3;
+  padding: 20px 0px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.tabcontent .token-holder h5 {
+  font-size: 20px;
+  color: #D1D1D1;
+  margin: 0;
+  display: inline-flex;
+}
+
+.tabcontent .token-holder .input_field {
+  background-color: transparent;
+  border: none;
+  width: 126px;
+  border-bottom: 2px solid #979797;
+}
+
+.tabcontent .token-holder .input_field:focus {
+  outline: none;
+}
+
+.portfolio-holder {
+  padding: 0 80px 40px;
+}
+
+.myportfolio {
+  min-height: 300px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px 0 rgba(217, 217, 217, 0.50);
+}
+
+.nav-tab {
+  display: inline-block;
+  font-size: 16px;
+  color: #546172;
+  padding: 12px 38px;
+  position: relative;
+  cursor: pointer;
+  outline: 0;
+  font-weight: 600;
+}
+
+.nav-tab.active {
+  color: #652381;
+}
+
+.nav-tab .border-animation {
+  position: absolute;
+  height: 0;
+  border: 2px solid transparent;
+  width: 0;
+  bottom: 0;
+  left: 36px;
+  transition: width .75s, border .75s;
+}
+
+.nav-tab:hover .border-animation,
+.nav-tab.active .border-animation {
+  width: calc(100% - 75px);
+  border-color: #652381;
+}
+
+.darkTheamebackgroundColor {
+  background-color: transparent;
+  box-shadow: none !important;
+}
+
+.darkTheamebackgroundColor .nav-tab,
+.darkTheamebackgroundColor .nav-tab.active {
+  color: #d4d4d4;
+}
+
+.darkTheamebackgroundColor .nav-tab:hover .border-animation,
+.darkTheamebackgroundColor .nav-tab.active .border-animation {
+  border-color: #ffff;
+}
+
+.darkTheameBoxbackground {
+  background: #24292f !important;
+  box-shadow: none !important;
+}
+.darkTheamebackgroundColor .portfolio-item-body {
+  background: #24292f;
+}
+
+.darkTheamebackgroundColor .portfolio-item-heading .current-price {
+  color: #d4d4d4;
+}
+
+.darkTheamebackgroundColor .heading p {
+  color: #8097B7 !important;
+}
+
+.tokenData .totalValue p {
+  font-size: 16px;
+  /*font-family: helvetica-light;*/
+  margin: 0;
+}
+
+.darkTheamebackgroundColor .content p {
+  color: #d4d4d4;
+}
+
+.darkTheamebackgroundColor .link {
+  color: #d4d4d4;
+}
+
+.darkTheamebackgroundColor .displayOnHover p.onhover {
+  background-color: #464646;
+  min-width: 100%;
+}
+
+.darkTheamebackgroundColor .compleateName {
+  background-color: #24292f;
+  border: 1px solid transparent;
+}
+
+.darkTheamebackgroundColor .portfolio-item .portfolio-item-heading .name {
+  color: #d4d4d4;
+}
+
+.container1{
+  background: transparent;
+  padding-top: 10px;
+  /*height:100vh;*/
+  padding-bottom: 10px;
+}
+
+.container21{
+  margin-bottom: 10px;
+  padding-right: 0px;
+}

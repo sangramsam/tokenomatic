@@ -1,0 +1,149 @@
+.trback{
+	background: #2c2e39;
+}
+
+.whitetext{
+	padding-top: 0;padding-bottom: 0;
+}
+
+.redtext{
+	color: red;padding-top: 0;padding-bottom: 0;
+}
+
+.greentext{
+	color: green;padding-top: 0;padding-bottom: 0;
+	font-weight: 900;
+}
+
+.background {
+	background: #323640;
+	min-height: 300px;
+	max-height: 300px;
+	overflow-y: scroll;
+}
+
+
+
+.popup-box1 {
+	height: 100vh;
+	width: 100%;
+	margin: 0 auto;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color:rgba(0, 0, 0, 0.8);
+	z-index: 9999;
+	-webkit-transition: all 100ms ease-in;
+	transition: all 100ms ease-in;
+  }
+  
+  .popup1 {
+	/* display: block; */
+	margin: 0 auto;
+	width: 30%;
+	height: 33rem;
+	padding: 2rem;
+	position: absolute;
+	left: 58%;
+	top: 45%;
+	transform: translate(-50%, -50%);
+	box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.2);
+	background-color: #fff;
+	z-index: 99999;
+  }
+  .popup-NotEnoughBalance,
+  .popup-errorBox {
+	margin: 0 auto;
+	width: 30%;
+	height: 25rem;
+	/* padding: 2rem; */
+	position: absolute;
+	left: 58%;
+	top: 45%;
+	transform: translate(-50%, -50%);
+	box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.2);
+	background-color: #fff;
+	z-index: 99999;
+  }
+  
+  .popup-box-gif {
+	text-align: center;
+  }
+  
+  .popup-gif1 {
+	margin: 0 auto;
+	width: 30%;
+	height: 30rem;
+	position: absolute;
+	left: 50%;
+	top: 45%;
+	transform: translate(-50%, -50%);
+	background-color: #fff;
+	z-index: 99999;
+  }
+  
+  .gif_footer1 {
+	font-size: 2rem;
+	color: black;
+  }
+  
+  .popup_header1 {
+	color: #fff;
+	font-size: 2.5rem;
+	padding: 2rem;
+	text-align: center;
+	border-bottom: .5px solid #333;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#000), to(#682382));
+	background-image: gradient(linear, left top, left bottom, from(#000), to(#682382));
+  }
+  
+  .popup_content {
+	padding: 2rem;
+	text-align: center;
+  }
+  
+  .popup_sub{
+	display: block;
+	font-size: 1.7rem;
+	text-align: center;
+	padding-bottom: 3rem;
+  }
+  
+  .popup_footer {
+	padding: 2rem;
+	color: black
+  }
+  .card{
+	text-align: center;
+	padding: 30px;
+	padding-top: 34px;
+	background-color: #fff;
+	height: 155px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 2px 4px 0 rgba(217, 217, 217, 0.50);
+	box-shadow: 0 2px 4px 0 rgba(217, 217, 217, 0.50);
+  }
+  .card p{
+	color: #732386;
+  }
+  .marginbtm{
+	margin-bottom: 10px;
+  }
+  .crsr{
+	cursor: pointer;
+  }
+  .introWidh{
+	width: 19%;
+	display: inline-flex;
+  }
+  .overide{
+	position: relative;
+	top: -38px;
+	height: auto;
+	padding: 9px;
+	background: #7d798c;
+	color: white;
+	text-align: center;
+	cursor: pointer;
+  }
+  

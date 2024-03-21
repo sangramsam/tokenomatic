@@ -1,0 +1,189 @@
+table {
+  border-collapse: collapse;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+}
+
+table tr {
+  text-align: center;
+}
+
+button {
+  background-color: #ffc107;
+  font-weight: bold;
+}
+
+.ra-note {
+  width: 419px;
+  height: 18px;
+  font-family: Helvetica;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: 0.2px;
+  color: #6eb322;
+}
+
+.rb-note {
+  width: 419px;
+  height: 18px;
+  font-family: Helvetica;
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: 0.2px;
+  color: white;
+}
+
+/* button:hover {
+	background-color: blue;
+	color: black;
+	cursor: pointer;
+} */
+
+.portfolio-holder {
+  padding: 0 80px 40px;
+}
+
+.portfolio-holder .tabs .tablinks:focus {
+  outline: none;
+}
+
+.portfolio-holder .tabs .tablinks {
+  background: none;
+  border: none;
+  margin-right: 5px;
+}
+
+.portfolio-holder .tabs .tablinks.active {
+  border-bottom: 4px solid #000;
+}
+
+.portfolio-holder .tabs .tablinks p {
+  /*font-family: Helvetica-Bold;*/
+  font-size: 17px;
+  color: #bbbbbb;
+  cursor: pointer;
+  margin-bottom: 6px;
+}
+
+.portfolio-holder .tabs .tablinks.active p {
+  color: #302e2e;
+  outline: none;
+}
+
+.portfolio-holder .heading p {
+  /*font-family: Helvetica-bold !important;*/
+  margin-bottom: 5px;
+  font-size: 15px !important;
+  color: #546172 !important;
+}
+
+.portfolio-holder .heading p span {
+  font-size: 10px;
+}
+
+.portfolio-holder {
+  padding: 25px;
+  background: #faf8f8;
+}
+
+.portfolio-holder .portfolio {
+  background: inherit !important;
+  padding: 25px;
+  background: #ffffff;
+  box-shadow: 0 2px 4px 0 rgba(217, 217, 217, 0.5);
+  border-radius: 5px;
+}
+
+.darkTheamebackgroundColor {
+  background-color: inherit;
+  box-shadow: none !important;
+}
+
+.darkTheamebackgroundColor .nav-tab,
+.darkTheamebackgroundColor .nav-tab.active {
+  color: #d4d4d4;
+}
+
+.darkTheamebackgroundColor .nav-tab:hover .border-animation,
+.darkTheamebackgroundColor .nav-tab.active .border-animation {
+  border-color: #ffff;
+}
+
+.darkTheameBoxbackground {
+  background: #24292f !important;
+  box-shadow: none !important;
+}
+.darkTheamebackgroundColor .portfolio-item-body {
+  background: #24292f;
+}
+
+.darkTheamebackgroundColor .portfolio-item-heading .current-price {
+  color: #d4d4d4;
+}
+
+.darkTheamebackgroundColor .heading p {
+  color: #8097b7 !important;
+}
+
+.darkTheamebackgroundColor .content p {
+  color: #d4d4d4;
+}
+
+.darkTheamebackgroundColor .link {
+  color: #d4d4d4;
+}
+
+.darkTheamebackgroundColor .displayOnHover p.onhover {
+  background-color: #464646;
+  min-width: 100%;
+}
+
+.darkTheamebackgroundColor .compleateName {
+  background-color: #24292f;
+  border: 1px solid transparent;
+}
+
+.darkTheamebackgroundColor .portfolio-item .portfolio-item-heading .name {
+  color: #d4d4d4;
+}
+
+.delAddInpStyle {
+  /* -webkit-appearance:none!important;
+  border:1px solid transparent;
+  background-color:transparent;
+  border-right:0px;
+  outline:none;
+  width:75px;
+  text-align:center;
+  border-bottom-color:white;
+  color:white; */
+  border-radius: 7px;
+  border-style: solid;
+  background-color: #494949;
+  border-color: #494949;
+  text-align: center;
+  outline-color: transparent;
+  color: white;
+  width: 325px;
+}
+
+.transferTezAmount {
+  border-radius: 7px;
+  border-style: solid;
+  background-color: #494949;
+  border-color: #494949;
+  text-align: center;
+  outline-color: transparent;
+  color: white;
+  width: 70px;
+}

@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "baseUrl": "./",
+    "module": "es2015",
+    "types": []
+  },
+  // "include": ["../node_modules/ngx-clipboard/src/*.ts"],
+  "exclude": ["test.ts", "**/*.spec.ts"]
+}

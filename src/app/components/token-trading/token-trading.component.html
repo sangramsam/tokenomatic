@@ -1,0 +1,309 @@
+<!-- <div class="container col-12 container1">
+	<div class="container row col-12 container21">
+		<exchange-wallet-select-inline></exchange-wallet-select-inline>
+	</div>
+	<div class="container col-12 portfolioPage">
+		<div class="tabcontent darkTheamebackgroundColor">
+			<div id="tab2" class="tab active">
+				<section>
+					<div *ngIf="selectedExchange != 'eth'"><div class="content"><p>Select 'ETH' as exchange to continue</p></div></div>
+					<div *ngIf="selectedExchange == 'eth'" class="portfolio-holder darkTheamebackgroundColor">
+						<div class="portfolio darkTheameBoxbackground">
+							<mat-card>
+
+								<mat-card-content>
+							    <div>
+							      <span *ngIf="account !== ''"><i>Ethereum Address: <b>{{account}}</b></i></span>
+							      &nbsp;&nbsp;&nbsp;<span *ngIf="sell_token.balance !== undefined"><i>Balance: <b>{{sell_token.balance}}</b> {{sell_token.symbol}}</i></span>
+							    </div>
+							  </mat-card-content>
+
+							  <mat-card-content>
+							    <div class ="row">
+							      <div class="col-3">
+							        <ngx-select-dropdown style="width: 200px" [config]="configSell" [options]="tokensAvailable" (change)="setSellToken($event)"></ngx-select-dropdown>
+							      </div>
+							      <div class="col-9">
+							        <mat-form-field>
+							          <input type="text" matInput placeholder="Enter Amount:" (change)="setSellValue($event)">
+							        </mat-form-field>
+							      </div>
+							    </div>
+							  </mat-card-content>
+
+							  <mat-card-content>
+							      <div class="row">
+							        <div class="col-3">
+							          <ngx-select-dropdown [config]="configBuy" [options]="tokensAvailable" (change)="setBuyToken($event)"></ngx-select-dropdown>
+							        </div>
+							        <div *ngIf="isDisplayCheckRate == true" class="col-9">
+							        	<button (click)="checkBuyVal()">Check Rates</button>
+							        </div>
+							      </div>
+							  </mat-card-content>
+
+							  <mat-card-content *ngIf="numTokensCheckedBancor > 0 || numTokensCheckedKyber > 0 || numTokensCheckedUniswap > 0 || numTokensChecked0xRelayer > 0">
+						      <span><b>{{sell_token.value}} {{sell_token.symbol}} ==> {{buy_token.symbol}}:</b></span>
+						      <br><br>
+						      <div *ngIf="bancorFailed == true && kyberFailed == true && uniswapFailed == true && zrxRelayerFailed == true">
+							    <i><pre>Sorry! The desired swap cannot be completed on any of the exchanges!</pre></i>
+							  </div>
+						      <span *ngIf="buy_token.bancor_value !== '0'"><pre>   Bancor: {{buy_token.bancor_value}} {{buy_token.symbol}}</pre></span>
+						      <span *ngIf="buy_token.kyber_value !== '0'"> <pre>   Kyber:  {{buy_token.kyber_value}} {{buy_token.symbol}}</pre></span>
+						      <span *ngIf="buy_token.uniswap_value !== '0'"><pre>   Uniswap: {{buy_token.uniswap_value}} {{buy_token.symbol}}</pre></span>
+						      <span *ngIf="buy_token.relayer0x_value !== '0'"><pre>   0x Relayer: {{buy_token.relayer0x_value}} {{buy_token.symbol}}</pre></span>
+						      <button *ngIf="numTokensCheckedBancor == 1 && numTokensCheckedKyber == 1 && numTokensCheckedUniswap == 1 && numTokensChecked0xRelayer == 1 && (buy_token.bancor_value > 0 || buy_token.kyber_value > 0 || buy_token.uniswap_value > 0 || buy_token.relayer0x_value > 0)" (click)="prepTrade()">Use the Best Exchanges</button>
+							  </mat-card-content>
+
+							  <mat-card-content>
+							    <span *ngIf="startTradePrep == true && buy_token.better_exchange != undefined"><pre>Using {{buy_token.better_exchange}} to buy {{buy_token.symbol}}</pre></span>
+							    <div *ngIf="startTradePrep === true && numTradesPrepared !== 1">
+							      <span><i><pre>Preparing trades ({{numTradesPrepared + 1}} of 1)</pre></i></span>
+							    </div>
+							  </mat-card-content>
+
+							  <mat-card-content *ngIf="tradesFailed == false && numTradesPrepared == 1">
+							    <div>
+							      <i><pre>Your trade is ready!</pre></i>
+							    </div>
+							    <div>
+							      <button (click)="confirm()">Confirm Transaction</button>
+							    </div>
+							  </mat-card-content>
+
+							  <mat-card-content *ngIf="tradesFailed == true">
+							    <div>
+							      <i><pre>Sorry! Unable to prepare your trades. Please try again later.</pre></i>
+							    </div>
+							  </mat-card-content>
+
+							  <mat-card-content *ngFor="let txnHash of txnHashes">
+							    <span *ngIf="txnHash !== undefined" class="txnHash"><pre>Your Transaction is being mined. Transaction Hash: {{txnHash}} <a href="https://etherscan.io/tx/{{txnHash}}" target=_blank><img class="viewEtherscan" src="../../../assets/images/arrow-popout.svg" title="View on Etherscan"></a></pre></span>
+							  </mat-card-content>
+
+							</mat-card>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
+</div> -->
+<div class="container col-12 container1">
+  <div class="container row col-12 container21">
+    <div class="col-7">
+      <exchange-wallet-select-inline></exchange-wallet-select-inline>
+    </div>
+    <div class="col-2"></div>
+    <div class="col-3" *ngIf="selectedExchange == 'eth'">
+      <input *ngIf="isSelected" type="text" id="balance" class="form-control" value="Balance : {{ sell_token.balance | number: '1.4-4' }}&nbsp;{{
+          sell_token.symbol
+        }}" readonly />
+      <input *ngIf="!isSelected" type="text" id="balance" class="form-control"
+        value="Balance : {{ ethBalance }}&nbsp;&nbsp;ETH" readonly />
+    </div>
+  </div>
+  <div *ngIf="selectedExchange == 'eth'" #place2 class="container  darkTheameBoxbackground">
+    <div class="container ">
+      <br />
+      <h5><b>Select Token and its Amount to Sell</b></h5>
+      <br />
+      <div class="row">
+        <div class="col-5">
+          <div class="form-group">
+            <label>Enter Token</label>
+            <div style="margin-bottom: 10px;">
+              <select [(ngModel)]="test1" #t class="btn1 btn-success1 dropdown-toggle" (change)="setSellToken($event)">
+                <option value="" disabled="" selected="">Input Token</option>
+                <option *ngFor="let e of tokensAvailable; let i = index" [ngValue]="e">{{ e }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-5">
+          <div class="form-group">
+            <label>Enter Amount
+              <span *ngIf="
+                  sell_token.symbol != undefined && sell_token.symbol.length > 0
+                ">(in {{ sell_token.symbol }})</span></label>
+            <input type="text" class="form-control " (change)="setSellValue($event)" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container ">
+      <h5>Select Token to Buy</h5>
+      <div class="row">
+        <div class="col-5">
+          <div class="form-group">
+            <label>Enter Token</label>
+            <div style="margin-bottom: 10px;">
+              <select [(ngModel)]="test2" (change)="setBuyToken($event)" class="btn1 btn-success1 dropdown-toggle">
+                <option value="" disabled="" selected="">Output Token</option>
+                <option *ngFor="let e of tokensAvailable; let i = index" [ngValue]="e">{{ e }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <button class="check-Trade-Rates" style="width: 80%;padding: 0px;margin-bottom: 10px;margin-top: 10px;"
+            (click)="checkBuyVal()">
+            Check Trade Rates
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="selectedExchange != 'eth'" class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4">
+    <div class="content">
+      <p style="color: white;">
+        Please Select 'ETH' as exchange and Select a Wallet to continue
+      </p>
+    </div>
+  </div>
+  <div class="col-sm-4"></div>
+</div>
+<div *ngIf="
+    selectedExchange == 'eth' &&
+    numTokensCheckedBancor +
+      numTokensCheckedKyber +
+      numTokensCheckedUniswap +
+      numTokensChecked0xRelayer >
+      3
+  " class="container col-12 container1">
+  <div #place2 class="container  darkTheameBoxbackground">
+    <div class="container ">
+      <br />
+      <div class="row">
+        <div class="col-3">
+          <h5><b>Trade Rates</b></h5>
+        </div>
+        <div class="col-9"></div>
+        <!-- <div
+          class="col-2"
+          *ngIf="
+            !bancorFailed || !kyberFailed || !uniswapFailed || !zrxRelayerFailed
+          "
+        >
+          <button
+            class="check-Rates"
+            style="width: 70%;padding: 0px;margin-bottom: 10px;margin-top: 10px;"
+          >
+            <b>Sort</b>&nbsp;&nbsp;&nbsp;
+            <img
+              src="../../../assets/images/icon3.png"
+              width="30"
+              height="30"
+            />
+          </button>
+        </div> -->
+      </div>
+      <br />
+      <div class="row" style="padding-right: 0px;">
+        <div *ngIf="buy_token.bancor_value !== '0'" class="col-sm">
+          <div class="card">
+            <p><b>Bancor</b></p>
+            <p>
+              <b>{{ buy_token.bancor_value }} {{ buy_token.symbol }}</b>
+            </p>
+          </div>
+        </div>
+        <div *ngIf="buy_token.kyber_value !== '0'" class="col-sm">
+          <div class="card">
+            <p><b>Kyber</b></p>
+            <p>
+              <b>{{ buy_token.kyber_value }} {{ buy_token.symbol }}</b>
+            </p>
+          </div>
+        </div>
+        <div *ngIf="buy_token.uniswap_value !== '0'" class="col-sm">
+          <div class="card">
+            <p><b>Uniswap</b></p>
+            <p>
+              <b>{{ buy_token.uniswap_value }} {{ buy_token.symbol }}</b>
+            </p>
+          </div>
+        </div>
+        <div *ngIf="buy_token.relayer0x_value !== '0'" class="col-sm">
+          <div class="card">
+            <p><b>0x Relayer</b></p>
+            <p>
+              <b>{{ buy_token.relayer0x_value }} {{ buy_token.symbol }}</b>
+            </p>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+          <div *ngIf="
+              bancorFailed == true &&
+              kyberFailed == true &&
+              uniswapFailed == true &&
+              zrxRelayerFailed == true
+            ">
+            <h4>
+              <span style="color: white;"><b>Sorry! The desired token was not found on any of Bancor,
+                  Kyber and Uniswap exchanges</b></span>
+            </h4>
+            <br />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+          <div *ngIf="
+              startTradePrep == true && buy_token.better_exchange != undefined
+            " class="cardPrepare">
+            <span style="color:white;">Using {{ buy_token.better_exchange }} to buy
+              {{ buy_token.symbol }}</span>
+          </div>
+        </div>
+        <div class="col-4"></div>
+      </div>
+      <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+          <div *ngIf="startTradePrep === true && numTradesPrepared !== 1" class="cardPrepare">
+            <span style="color:white;">Preparing trades ({{ numTradesPrepared + 1 }} of 1)</span>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="
+          !bancorFailed || !kyberFailed || !uniswapFailed || !zrxRelayerFailed
+        " class="row">
+        <div *ngIf="!(startTradePrep === true && numTradesPrepared !== 1)" class="col-3">
+          <button *ngIf="tradesFailed == false && numTradesPrepared == 1" class="check-Trade-Rates"
+            style="width: 80%;padding: 0px;margin-bottom: 10px;margin-top: 10px;" (click)="confirm()">
+            Buy Best Rate
+          </button>
+          <button *ngIf="!(tradesFailed == false && numTradesPrepared == 1)" class="check-Trade-Rates"
+            style="width: 80%;padding: 0px;margin-bottom: 10px;margin-top: 10px;" (click)="prepTrade()">
+            Prepare Trade
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="selectedExchange == 'eth'" class="popup-box" [ngStyle]="{ display: displayGif }">
+  <div class="popup-gif">
+    <div class="popup_header">Please Wait</div>
+    <div class="popup_content">
+      <div class="popup_sub">
+        <img class="img img-responsive gif-img" src="assets/images/tt-loader.png  " alt="" style="width: 100px;" />
+      </div>
+      <div class="gif_footer">
+        Please wait while the exchange rates are being collected from exchanges
+      </div>
+    </div>
+  </div>
+</div>

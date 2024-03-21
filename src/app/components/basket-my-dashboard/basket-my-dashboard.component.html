@@ -1,0 +1,878 @@
+<div class="container col-12 portfolioPage">
+  <div class="tabcontent darkTheamebackgroundColor">
+    <div id="tab2" class="tab active">
+
+      <section>
+        <div class="portfolio-holder darkTheamebackgroundColor">
+
+          <div class="myportfolio darkTheameBoxbackground" *ngIf="visibleTab === 'sell'">
+            <div class="row" style="margin-top: 0px; margin-bottom: 35px; margin-left: 35%;">
+              <button
+                style="background: white!important;color: rgba(83, 83, 83, 0.85);border-radius: 0px!important;outline: none;!important;"
+                class="btn btn-primary" (click)="pendingPortfolio('Pending')"
+                [ngClass]="{'active-btn': activeTab==='Pending'}">Pending
+              </button>
+              <button
+                style="background: white!important;color: rgba(83, 83, 83, 0.85);border-radius: 0px!important;outline: none;!important;"
+                class="btn btn-primary" (click)="pendingPortfolio('Active')"
+                [ngClass]="{'active-btn': activeTab==='Active'}">Active
+              </button>
+              <!--<button  style="background: white!important;color: purple!important;border-radius: 0px!important;outline: none;!important;" class="btn btn-primary" (click)="pendingPortfolio('canceled')" [ngClass]="{'active-btn': activeTab==='canceled'}" >Canceled</button>-->
+              <!-- <button
+                style="background: white!important;color: rgba(83, 83, 83, 0.85);border-radius: 0px!important;outline: none;!important;"
+                class="btn btn-primary" (click)="pendingPortfolio('quick-buy');getOrderHistory();"
+                [ngClass]="{'active-btn': activeTab==='quick-buy'}">Order History
+              </button> -->
+            </div>
+            <div class="table-responsive" *ngIf="activeTab !== 'quick-buy'" style="height: 400px;">
+              <table class="table table-hover table-dark" border="1" id="pendingTable">
+                <thead *ngIf="activeTab==='Active'">
+                  <tr style="border-bottom: 4px solid #3d3d3d;">
+                    <!-- Select
+                    Basket Name
+                    Current Price (ETH)
+                    Owner’s Account
+                    Status -->
+                    <th scope="col">Select</th>
+                    <th scope="col">Basket Name</th>
+                    <th scope="col">Current Price (ETH)</th>
+                    <th scope="col">Owner’s Account</th>
+                    <th scope="col">Status</th>
+                    <th *ngIf="activeTab==='Active'" scope="col"></th>
+                  </tr>
+                </thead>
+                <thead *ngIf="activeTab==='Pending'">
+                  <tr style="border-bottom: 4px solid #3d3d3d;">
+                    <th scope="col">Basket Name</th>
+                    <th scope="col">Token Name</th>
+                    <th scope="col">Trade</th>
+                    <th scope="col">Basket Creation</th>
+                    <th scope="col">Approval</th>
+                    <th scope="col">Deposit</th>
+                    <th scope="col">Publish</th>
+                  </tr>
+                </thead>
+                <!-- <tbody *ngIf="activeTab==='Active'" id="radioDiv">
+                  <tr *ngIf="portfolioDataFileredsellables.length === 0 && showBuyLoader==false && activeTab==='Active'">
+                    <td colspan="4" style="text-align: center;">No Baskets</td>
+                  </tr>
+                </tbody> -->
+                <tbody *ngIf="activeTab==='Active'" id="radioDiv">
+                  <!-- <tr *ngFor="let sellAblePortfolio of portfolioDataFileredsellables| paginate: { itemsPerPage: 5, currentPage: currentActivePage }; let i = index"> -->
+                  <tr *ngFor="let sellAblePortfolio of portfolioDataFileredsellables; let i = index">
+                    <td (click)="showBuyPortfolioModal(i, sellAblePortfolio,'Basket')" style="text-align:center">
+                      <span style="text-align:center" class="radioButtonStyle">
+                        <input style="text-align:center" type="radio"
+                          id="portfolioRadioSelect{{ ((currentActivePage-1)*5)+i }}" name="radioselector"
+                          (click)="selectedActiveButton=((currentActivePage-1)*5)+i;portfolioActiveSelect(((currentActivePage-1)*5)+i)"
+                          [checked]="selectedActiveButton==((currentActivePage-1)*5)+i">
+                        <label for="portfolioRadioSelect{{ ((currentActivePage-1)*5)+i }}"></label>
+                        <div class="check"></div>
+                      </span>
+                    </td>
+                    <td (click)="showBuyPortfolioModal(i, sellAblePortfolio,'Basket')">
+                      <p>
+                        {{sellAblePortfolio.basketName}}
+                      </p>
+                    </td>
+                    <td (click)="showBuyPortfolioModal(i, sellAblePortfolio,'Basket')">
+                      <p>
+                        {{sellAblePortfolio.basketPrice}}
+                      </p>
+                    </td>
+                    <td (click)="showBuyPortfolioModal(i, sellAblePortfolio,'Basket')">
+                      <p>
+                        {{sellAblePortfolio.currentOwner}}
+                      </p>
+                    </td>
+                    <td (click)="showBuyPortfolioModal(i, sellAblePortfolio,'Basket')">
+                      <p>
+                        Confirmed
+                      </p>
+                    </td>
+                    <td (click)="showBuyPortfolioModal(i, sellAblePortfolio,'Basket')">
+                      <p>
+                        <button class="RetryButton" [disabled]="sellAblePortfolio.liquidatestatus"
+                          [class.RectangleButtonDisable]="sellAblePortfolio.liquidatestatus"
+                          [class.RectangleButtonActive]="!sellAblePortfolio.liquidatestatus"
+                          (click)="isLiquidate=true;liquidateModal(sellAblePortfolio)">Liquidate</button>
+                      </p>
+                    </td>
+                  </tr>
+
+                  <tr
+                    *ngIf="portfolioDataFileredsellables.length === 0 && showBuyLoader==false && activeTab==='Active'">
+                    <td colspan="4" style="text-align: center;">No Baskets</td>
+                  </tr>
+                </tbody>
+                <!-- <tbody *ngIf="activeTab==='Pending'" id="radioDiv">
+                    <tr *ngFor="let pendingPortfolio of portfolioPendingLists; let i = index">
+                    <td (click)="showBuyPortfolioModal(i, pendingPortfolio,'Basket')" style="text-align:center">
+                      <span style="text-align:center" class="radioButtonStyle">
+                        <input style="text-align:center" type="radio" id="portfolioRadioSelect{{ ((currentShowingPage-1)*5)+i }}"
+                          name="radioselector" (click)="selectedButton=((currentShowingPage-1)*5)+i;portfolioPendingSelect(((currentShowingPage-1)*5)+i)"
+                          [checked]="selectedButton==((currentShowingPage-1)*5)+i">
+                        <label for="portfolioRadioSelect{{ ((currentShowingPage-1)*5)+i }}"></label>
+                        <div class="check"></div>
+                      </span>
+                    </td>
+                    <td (click)="showBuyPortfolioModal(i, pendingPortfolio,'Basket')">
+                      <p>
+                        {{pendingPortfolio.basketName}}
+                      </p>
+                    </td>
+                    <td (click)="showBuyPortfolioModal(i, pendingPortfolio,'Basket')">
+                      <p>
+                        {{ pendingPortfolio.basketPrice }}
+                      </p>
+                    </td>
+                    <td (click)="showBuyPortfolioModal(i, pendingPortfolio,'Basket')">
+                      <p>
+                        {{pendingPortfolio.currentOwner}}
+                      </p>
+                    </td>
+                    <td (click)="showBuyPortfolioModal(i, pendingPortfolio,'Basket')">
+                      <p *ngIf="pendingPortfolio.canResume==='pending'">
+                        Pending
+                      </p>
+                      <p *ngIf="pendingPortfolio.canResume==='resume'">Paused&nbsp;
+                      <button class="RetryButton" [disabled]="portfolioService.resumeStatus" [class.RectangleButtonDisable]="portfolioService.resumeStatus"
+                      [class.RectangleButtonActive]="!portfolioService.resumeStatus"(click)="portfolioService.resumeStatus=true;isLiquidate=true;resume(pendingPortfolio.basketContract,pendingPortfolio.basketCreationHash,pendingPortfolio.basketID,pendingPortfolio.tokens.length);">Resume</button>
+                    </p>
+                      <p *ngIf="pendingPortfolio.canResume==='processing'">
+                        Processing ...
+                      </p>
+                    </td>
+                  </tr>
+                  <tr *ngIf="portfolioPendingLists.length === 0 && showBuyLoader==false &&  activeTab==='Pending' && portfolioService.basketstatus==false">
+                    <td colspan="4" style="text-align: center;">No Baskets</td>
+                  </tr>
+                  <tr *ngIf="portfolioPendingLists.length === 0 && showBuyLoader==false &&  activeTab==='Pending' && portfolioService.basketstatus==true">
+                    <td colspan="4" style="text-align: center;"><h5>Your last basket was not created as one of your traded tokens could not be bought due to a contract revert error from one of the exchange APIs</h5></td>
+                  </tr>
+                </tbody> -->
+                <tbody *ngIf="activeTab==='Pending'&&portfolioPendingLists.length>0  " id="radioDiv">
+
+                  <tr *ngFor="let tokenDetail of portfolioPendingLists[0].basket.tokens; let i = index">
+                    <td *ngIf="i==0;" [attr.rowspan]="portfolioPendingLists[0].basket.tokens.length"
+                      (click)="showBuyPortfolioModal(i, portfolioPendingLists[0].basket,'Basket')">
+                      <p>
+                        {{ portfolioPendingLists[0].basket.basketName }}
+                      </p>
+                    </td>
+                    <td (click)="showBuyPortfolioModal(i, portfolioPendingLists[0].basket,'Basket')">
+                      <p>
+                        {{ tokenDetail.tokenSymbol }}
+                      </p>
+                    </td>
+                    <td (click)="showBuyPortfolioModal(i, portfolioPendingLists[0].basket,'Basket')">
+                      <p>
+                        {{ tokenDetail.status }}
+                        <span
+                          *ngIf="(tokenDetail.status=='nonceTooLow'||tokenDetail.status=='replacementTxnUnderPriced')&&tokenDetail.retrybutton">
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;tradeAndBasketCreation()">Retry</button>
+                        </span>
+                        <span *ngIf="tokenDetail.status=='insuffETH'">
+
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true" (click)="isLiquidate=true;insufficient(tokenDetail.tokenSymbol,portfolioPendingLists[0].trades
+                          )">Retry</button>
+
+                        </span>
+
+                        <span *ngIf="tokenDetail.status=='EVMRevert'">
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;tradeAndBasketCreationevm(tokenDetail.tokenSymbol)">Retry</button>
+                        </span>
+
+                        <span *ngIf="tokenDetail.status=='sent'&&tokenDetail.tradesent">
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;tradeAndBasketCreationsent(tokenDetail.tokenSymbol)">Retry</button>
+                        </span>
+                      </p>
+                    </td>
+                    <td *ngIf="i==0;" [attr.rowspan]="portfolioPendingLists[0].basket.tokens.length"
+                      (click)="showBuyPortfolioModal(i, portfolioPendingLists[0].basket,'Basket')">
+                      <p>
+                        {{ portfolioPendingLists[0].basket.canResume }}
+                        <span *ngIf="portfolioPendingLists[0].basket.canResume=='resume'">
+                          <button class="RetryButton" [disabled]="portfolioService.resumeStatus"
+                            [class.RectangleButtonDisable]="portfolioService.resumeStatus"
+                            [class.RectangleButtonActive]="!portfolioService.resumeStatus"
+                            (click)="portfolioService.resumeStatus=true;isLiquidate=true;resume(portfolioPendingLists[0].basket.basketContract,portfolioPendingLists[0].basket.basketCreationHash,portfolioPendingLists[0].basket.basketID,portfolioPendingLists[0].basket.tokens,portfolioPendingLists[0].basket.tokens.length);">Resume</button>
+                        </span>
+                        <span
+                          *ngIf="(portfolioPendingLists[0].basket.basketCreationStatus=='nonceTooLow'||portfolioPendingLists[0].basket.basketCreationStatus=='replacementTxnUnderPriced')&&portfolioPendingLists[0].basket.retrybutton">
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;basketrecreation(portfolioPendingLists[0].basket)">Retry</button>
+                        </span>
+                        <span *ngIf="portfolioPendingLists[0].basket.basketCreationStatus=='insuffETH'">
+
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;EthBasketService.insufficientbalance(portfolioPendingLists[0].basket.basketCreationSign,'basketCreation')">Retry</button>
+
+                        </span>
+                        <span *ngIf="portfolioPendingLists[0].basket.basketCreationStatus=='EVMRevert'">
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;basketrecreation(portfolioPendingLists[0].basket)">Retry</button>
+                        </span>
+                        <span
+                          *ngIf="portfolioPendingLists[0].basket.basketCreationStatus=='sent'&&portfolioPendingLists[0].basket.basketsent">
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;basketrecreation(portfolioPendingLists[0].basket)">Retry</button>
+                        </span>
+                      </p>
+                    </td>
+                    <td (click)="showBuyPortfolioModal(i, portfolioPendingLists[0].basket,'Basket')">
+                      <p *ngIf="portfolioPendingLists[0].betters.length===0"> ----- </p>
+                      <p *ngIf="portfolioPendingLists[0].betters.length>0">
+                        {{ portfolioPendingLists[0].betters[i].approval_status }}
+                        <span
+                          *ngIf="portfolioPendingLists[0].betters[i].approval_status=='nonceTooLow'&&portfolioPendingLists[0].betters[i].approvalretrybutton">
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;authdeposit(portfolioPendingLists)">Retry</button>
+                        </span>
+                        <span
+                          *ngIf="portfolioPendingLists[0].betters[i].approval_status=='replacementTxnUnderPriced'&&portfolioPendingLists[0].betters[i].approvalretrybutton">
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;authdeposit(portfolioPendingLists)">Retry</button>
+                        </span>
+                        <span *ngIf="portfolioPendingLists[0].betters[i].approval_status=='insuffETH'">
+
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;EthBasketService.insufficientbalance(portfolioPendingLists[0].betters[i].approval_sign,'approval')">Retry</button>
+
+                        </span>
+
+                        <span *ngIf="portfolioPendingLists[0].betters[i].approval_status=='EVMRevert'">
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;authevm(portfolioPendingLists[0].betters[i])">Retry</button>
+                        </span>
+                        <span
+                          *ngIf="portfolioPendingLists[0].betters[i].approval_status=='sent'&&portfolioPendingLists[0].betters[i].approvalsent">
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;authevm(portfolioPendingLists[0].betters[i])">Retry</button>
+                        </span>
+                      </p>
+                    </td>
+                    <td (click)="showBuyPortfolioModal(i, portfolioPendingLists[0].basket,'Basket')">
+
+                      <p *ngIf="portfolioPendingLists[0].betters.length===0"> ----- </p>
+                      <p *ngIf="portfolioPendingLists[0].betters.length>0">
+                        {{ portfolioPendingLists[0].betters[i].transfer_status }}
+                        <span
+                          *ngIf="(portfolioPendingLists[0].betters[i].transfer_status=='nonceTooLow'||portfolioPendingLists[0].betters[i].transfer_status=='replacementTxnUnderPriced')&&portfolioPendingLists[0].betters[i].transferretrybutton">
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;authdeposit(portfolioPendingLists)">Retry</button>
+                        </span>
+
+                        <span *ngIf="portfolioPendingLists[0].betters[i].transfer_status=='insuffETH'">
+
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;EthBasketService.insufficientbalance(portfolioPendingLists[0].betters[i].transfer_sign,'transfer')">Retry</button>
+
+                        </span>
+
+                        <span *ngIf="portfolioPendingLists[0].betters[i].transfer_status=='EVMRevert'">
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;depositevm(portfolioPendingLists[0].betters[i])">Retry</button>
+                        </span>
+                        <span
+                          *ngIf="portfolioPendingLists[0].betters[i].transfer_status=='sent'&&portfolioPendingLists[0].betters[i].transfersent">
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;depositevm(portfolioPendingLists[0].betters[i])">Retry</button>
+                        </span>
+                      </p>
+                    </td>
+                    <td *ngIf="i==0;" [attr.rowspan]="portfolioPendingLists[0].basket.tokens.length"
+                      (click)="showBuyPortfolioModal(i, portfolioPendingLists[0].basket,'Basket')">
+                      <p>
+                        {{ portfolioPendingLists[0].basket.basketPublishStatus }}
+
+                        <span
+                          *ngIf="(portfolioPendingLists[0].basket.basketPublishStatus=='nonceTooLow'||portfolioPendingLists[0].basket.basketPublishStatus=='replacementTxnUnderPriced')&&portfolioPendingLists[0].basket.publishretrybutton">
+
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;publishbasket(portfolioPendingLists)">Retry</button>
+
+                        </span>
+                        <span *ngIf="portfolioPendingLists[0].basket.basketPublishStatus=='insuffETH'">
+
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;EthBasketService.insufficientbalance(portfolioPendingLists[0].basket.basketPublishSign,'publish')">Retry</button>
+
+                        </span>
+                        <span *ngIf="portfolioPendingLists[0].basket.basketPublishStatus=='EVMRevert'">
+
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;publishbasket(portfolioPendingLists)">Retry</button>
+
+                        </span>
+
+                        <span
+                          *ngIf="portfolioPendingLists[0].basket.basketPublishStatus=='sent'&&portfolioPendingLists[0].basket.publishsent">
+
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;publishbasket(portfolioPendingLists)">Retry</button>
+
+                        </span>
+                      </p>
+                    </td>
+
+                  </tr>
+                </tbody>
+                <tbody *ngIf="activeTab==='Pending'&&portfolioPendingLists.length===0">
+                  <tr
+                    *ngIf="portfolioPendingLists.length === 0 && showBuyLoader==false &&  activeTab==='Pending' && portfolioService.basketstatus==false">
+                    <td colspan="7" style="text-align: center;">No Baskets</td>
+                  </tr>
+                  <!-- <tr *ngIf="portfolioPendingLists.length === 0 && showBuyLoader==false &&  activeTab==='Pending' && portfolioService.basketevmrevert==true">
+                    <td colspan="7" style="text-align: center;"><h5>Your last basket was not created as one of your traded tokens could not be bought due to a contract revert error from one of the exchange APIs</h5></td>
+                  </tr> -->
+                </tbody>
+
+              </table>
+
+              <div *ngIf="activeTab==='Pending'">
+                <h2 style="color: white;text-align: center;">Trade Token Details</h2>
+              </div>
+              <table *ngIf="activeTab==='Pending'" class="table table-hover table-dark" border="1" id="tradeTable">
+                <thead style="text-align: center;">
+                  <tr style="border-bottom: 4px solid #3D3D3D;">
+                    <th scope="col">Token Name</th>
+                    <th scope="col">Trade Status</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="activeTab==='Pending'" id="radioDiv">
+                  <tr *ngIf="tradeDetails.length === 0 && showBuyLoader==false && activeTab==='Pending'">
+                    <td colspan="2" style="text-align: center;">No Trades</td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="activeTab==='Pending'" id="radioDiv">
+                  <tr *ngFor="let tradeDetail of tradeDetails; let i = index">
+                    <td>
+                      <p>
+                        {{ tradeDetail.buyToken }}
+                      </p>
+                    </td>
+                    <td>
+                      <p>
+                        {{ tradeDetail.status }}
+                        <span
+                          *ngIf="tradeDetail.status=='nonceTooLow'||tradeDetail.status=='replacementTxnUnderPriced'">
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true" (click)="tradeRecreation(tradeDetail)">Retry</button>
+                        </span>
+
+                        <span *ngIf="tradeDetail.status=='EVMRevert'">
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true" (click)="tradeRecreation(tradeDetail)">Retry</button>
+                        </span>
+
+                        <span *ngIf="tradeDetail.status=='insuffETH'">
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true"
+                            (click)="isLiquidate=true;EthBasketService.insufficientbalance(tradeDetail.sign,'trade')">Retry</button>
+                        </span>
+
+                        <span *ngIf="tradeDetail.status=='sent'&&tradeDetail.tradesent">
+                          <button class="RetryButton" [disabled]="false" [class.RectangleButtonDisable]="false"
+                            [class.RectangleButtonActive]="true" (click)="tradeRecreation(tradeDetail)">Retry</button>
+                        </span>
+                      </p>
+
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- <div *ngIf="portfolioPendingLists.length != 0  &&  activeTab==='Pending'" class="row">
+              <div class="col-5"></div>
+              <div class="col-2 paginateCenter">
+                <div class="PaginatorBg">
+                  <span *ngIf="!prevDisable;" (click)="previousPage()">
+                    <img src="../../../assets/images/prev_nav.png" style="height: 20px;cursor: pointer;">
+                  </span>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <span *ngIf="!prevDisable;" class="PaginatorPages">
+                      {{currentShowingPage-1}}&nbsp;&nbsp;&nbsp;&nbsp;
+                  </span>
+                  <span *ngFor="let page of pages | paginate: { itemsPerPage: 1, currentPage: currentShowingPage };">
+                    <span class="ActivePage ActivePageNumber">
+                      {{page}}
+                    </span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                  </span>
+                  <span *ngIf="!nextDisable;"> 
+                    <span class="PaginatorPages">{{currentShowingPage+1}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                  </span>
+                  <span *ngIf="!nextDisable;" (click)="nextPage()">
+                    <img src="../../../assets/images/next_nav.png" style="height: 20px;cursor: pointer;">
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="portfolioDataFileredsellables.length != 0  &&  activeTab==='Active'" class="row">
+              <div class="col-5"></div>
+              <div class="col-2 paginateCenter">
+                <div class="PaginatorBg">
+                  <span *ngIf="!prevActiveDisable;" (click)="previousActivePage()">
+                    <img src="../../../assets/images/prev_nav.png" style="height: 20px;cursor: pointer;">
+                  </span>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <span *ngIf="!prevActiveDisable;" class="PaginatorPages">
+                      {{currentActivePage-1}}&nbsp;&nbsp;&nbsp;&nbsp;
+                  </span>
+                  <span *ngFor="let page of activePages | paginate: { itemsPerPage: 1, currentPage: currentActivePage };">
+                    <span class="ActivePage ActivePageNumber">
+                      {{page}}
+                    </span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                  </span>
+                  <span *ngIf="!nextActiveDisable;"> 
+                    <span class="PaginatorPages">{{currentActivePage+1}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                  </span>
+                  <span *ngIf="!nextActiveDisable;" (click)="nextActivePage()">
+                    <img src="../../../assets/images/next_nav.png" style="height: 20px;cursor: pointer;">
+                  </span>
+                </div>
+              </div>
+            </div> -->
+            <div *ngIf="activeTab === 'quick-buy'">
+              <div class="portfolio-content hidden-xs">
+                <app-basket-order></app-basket-order>
+              </div>
+            </div>
+            <!-- </div> -->
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </div>
+  <div class="modal-container" *ngIf="showSellablePortfolioQuotesModal">
+    <div class="quotes-modal">
+      <div class="quotes-header-container">
+        <div class="quotes-header">
+          Available Quotes
+        </div>
+        <div class="quotes-button">
+          <i class="fa fa-times"
+            style="float: right; position: relative; margin-top: 15px; margin-right: 20px; cursor: pointer;"
+            (click)="hideSaleQuotesModal()"></i>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="quote-table-header">
+        <div style="width:280px; display: inline-block;">User</div>
+        <div style="width:170px; display: inline-block;">Quote (in ETH)</div>
+      </div>
+      <div class="col-lg-12" *ngIf="sellablePortfolioQuotes.length === 0">
+        <div>
+          No quotes available for this portfolio
+        </div>
+      </div>
+      <div class="quote-row" *ngFor="let quote of sellablePortfolioQuotes">
+        <div style="width:280px; display: inline-flex;" title="{{quote.UserAccount}}">
+          <a class="link" style="display: inline-block; width: 240px; overflow: hidden; text-overflow: ellipsis;"
+            href="{{getAddressUrl()}}{{quote.UserAccount}}" target="_blank"> {{quote.UserAccount}} </a></div>
+        <div style="width:170px; display: inline-block;">{{quote.Value}}</div>
+        <span class="inpbtn">
+          <button class="row-button" style="margin-bottom: 10px;" (click)="sellPortfolio(quote)">Sell</button>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="shouldShowBuyPortfolioModal">
+    <div class="modal fade in portfolio-dialogue" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content darkThemeModal-Content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="z-index: 999!important;"
+              (click)="hideBuyPorfolioModal()">
+              &#10005;
+              <!-- <span aria-hidden="true"><i class="fa fa-times"></i></span> -->
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="portfolio-choices">
+              <h4 class="modal-title">Token Basket Name : {{selectedBuyAblePorfolio.portfolio.basketName}}</h4>
+              <br>
+              <br>
+              <div class="owner-ac">
+                <p style="cursor: pointer"
+                  (click)="etherscanAddressDetails(selectedBuyAblePorfolio.portfolio.currentOwner)"> Account Owner
+                  : {{selectedBuyAblePorfolio.portfolio.currentOwner}}</p>
+                <p style="cursor: pointer"
+                  (click)="etherscanAddressDetails(selectedBuyAblePorfolio.portfolio.basketContract)">
+                  Contract Address : {{selectedBuyAblePorfolio.portfolio.basketContract}}</p>
+              </div>
+              <div class="time-selectors">
+                <span class="col-xs-4 time-selector" (click)="setStockTF('mm')"
+                  [ngClass]="{active : isStockTF('mm')}"><span>1m</span></span>
+                <span class="col-xs-4 time-selector" (click)="setStockTF('hh')"
+                  [ngClass]="{active : isStockTF('hh')}"><span>1h</span></span>
+                <span class="col-xs-4 time-selector" (click)="setStockTF('DD')"
+                  [ngClass]="{active : isStockTF('DD')}"><span>1d</span></span>
+              </div>
+            </div>
+            <div class="stock-graph">
+              <div id="stockchartdiv" [style.width.%]="100" [style.minHeight.px]="350"></div>
+            </div>
+            <div class="coin-details">
+              <div class="row">
+                <div class="col-12">
+                  <div class="tokenData">
+                    <div class="row bdrbtm">
+                      <div class="col-md-3 col-xs-3">
+                        <div class="heading">
+                          <p>
+                            Token
+                          </p>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-3">
+                        <div class="heading">
+                          <p>
+                            Quantity
+                          </p>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-3 pad0">
+                        <div class="heading">
+                          <p>
+                            Price (in ETH)
+                          </p>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-3 pad0">
+                        <div class="heading">
+                          <p>
+                            Price (in USD)
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="bdrbtm">
+                      <div class="noToken"
+                        *ngIf="!selectedBuyAblePorfolio || !selectedBuyAblePorfolio.filteredAssets.length">
+                        <p> You Don't have any tokens in your Token basket</p>
+                      </div>
+                      <div class="row tokenAvailble"
+                        *ngFor="let asset of selectedBuyAblePorfolio.filteredAssets; let i = index">
+                        <div class="col-md-3 col-xs-3">
+                          <div class="tokenDataValue">
+                            <div class="legend" [ngStyle]="{'background-color' : getPieLegendColor(asset.Symbol)}">
+                              <p>{{asset.tokenSymbol}}</p>
+                            </div>
+
+                          </div>
+                        </div>
+                        <div class="col-md-3 col-xs-3">
+                          <div class="tokenDataValue">
+                            <p> {{asset.amount}} <span *ngIf="asset.value == 1">token</span><span
+                                *ngIf="!(asset.value == 1)">tokens</span></p>
+                          </div>
+                        </div>
+                        <div class="col-md-3 col-xs-3">
+                          <div class="tokenDataValue">
+                            <p>{{getAssetValue(asset, 'ETH') | number : '.0-6'}}</p>
+                          </div>
+                        </div>
+                        <div class="col-md-3 col-xs-3">
+                          <div class="tokenDataValue">
+                            <p>{{getAssetValue(asset, 'USD') | number : '.0-6'}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="row total">
+                        <div class="col-md-3 col-xs-3">
+                          <div class="totalValue">
+                            <p>
+                              {{selectedBuyAblePorfolio.portfolio.basketName}}
+                            </p>
+                          </div>
+                        </div>
+                        <div class="col-md-3 col-xs-3">
+                          <div class="totalValue">
+                            <p>
+                              {{totalTokens}} Tokens
+                            </p>
+                          </div>
+                        </div>
+                        <div class="col-md-3 col-xs-3">
+                          <div class="totalValue">
+                            <p>
+                              {{getTotalPorfolioValue('ETH') | number : '.0-6'}}
+                            </p>
+                          </div>
+                        </div>
+                        <div class="col-md-3 col-xs-3">
+                          <div class="totalValue">
+                            <p>
+                              {{getTotalPorfolioValue('USD') | number : '.0-6'}}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="col-md-4 col-xs-12 col-sm-5">
+                  <div class="piechart">
+                    <div id="piechartdiv" [style.width.%]="100" [style.minHeight.px]="250"></div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <div class="user-actions" style="text-align: center;">
+              <div class="row col-12 prices">
+                <div class="col-sm">
+                  <h3 class="heading">Selling Price : </h3>
+                  <p>{{selectedBuyAblePorfolio.portfolio.basketPrice}} ETH =
+                    {{selectedBuyAblePorfolio.portfolio.basketPrice * usd }} USD</p>
+                </div>
+                <div class="col-sm">
+                  <button class="btn btn-custom" *ngIf="trackBuyButton"
+                    [disabled]="selectedBuyAblePorfolio.portfolio.buystatus"
+                    [class.CusButtonDisable]="selectedBuyAblePorfolio.portfolio.buystatus"
+                    [class.CusButtonActive]="!selectedBuyAblePorfolio.portfolio.buystatus"
+                    (click)="buy(selectedBuyAblePorfolio.portfolio)">Buy
+                  </button>
+                  <button class="btn btn-custom" *ngIf="trackLiquidateButton"
+                    [disabled]="selectedBuyAblePorfolio.portfolio.liquidatestatus"
+                    [class.CusButtonDisable]="selectedBuyAblePorfolio.portfolio.liquidatestatus"
+                    [class.CusButtonActive]="!selectedBuyAblePorfolio.portfolio.liquidatestatus"
+                    (click)="liquidate(selectedBuyAblePorfolio.portfolio)">Liquidate
+                  </button>
+                  <button class="btn btn-custom" *ngIf="selectedBuyAblePorfolio.portfolio.canResume"
+                    [disabled]="selectedBuyAblePorfolio.portfolio.canResume!='resume'"
+                    [class.CusButtonDisable]="selectedBuyAblePorfolio.portfolio.canResume!='resume'"
+                    [class.CusButtonActive]="selectedBuyAblePorfolio.portfolio.canResume==='resume'"
+                    (click)="resume(selectedBuyAblePorfolio.portfolio.basketContract,selectedBuyAblePorfolio.portfolio.basketCreationHash,selectedBuyAblePorfolio.portfolio.basketID,selectedBuyAblePorfolio.portfolio.tokens.length);selectedBuyAblePorfolio.portfolio.canResume=false;portfolioService.resumeStatus=true;">Resume
+                  </button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop fade in"></div>
+  </div>
+  <div *ngIf="trackLiquidateModal">
+    <div class="modal fade in portfolio-dialogue" tabindex="-1" role="dialog">
+      <div class="modal-dialog " role="document">
+        <div [ngClass]="switchThemeService.switchTheme ? 'modal-content darkThemeModal-Content':'modal-content' "
+          class="modal-content">
+          <div class="modal-header" style="padding: 10px!important;background: #323c49!important;">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="z-index: 999;!important;"
+              (click)="closeLiquidateModal()">
+              &#10005;
+              <!-- <span aria-hidden="true"><i class="fa fa-times"></i></span> -->
+            </button>
+            <h4 class="modal-title" style="color: white">Liquidate Basket</h4>
+          </div>
+          <div class="modal-body" style="padding: 45px!important;">
+            <table class="table table-bordered" style="color: black!important;">
+              <tr>
+                <th>Token</th>
+                <th>Value</th>
+              </tr>
+              <tr *ngFor="let tokens of selectedPortfolioToken.tokens">
+                <td>{{tokens.tokenSymbol}}</td>
+                <td>{{tokens.amount}}</td>
+              </tr>
+            </table>
+            <div class="buttons-pull-center">
+              <div style="text-align: center;">
+                <button class="btn btn-custom btn-justify"
+                  (click)="liquidate(selectedPortfolioToken);closeLiquidateModal()">Liquidate
+                </button><button class="btn btn-custom btn-justify" (click)="closeLiquidateModal()">Cancel</button>
+
+              </div>
+              <br>
+              <!-- <div style="text-align: center;">
+                <button class="btn btn-custom btn-justify" (click)="closeLiquidateModal()">Cancel</button>
+              </div> -->
+            </div>
+            <!-- <div class="buttons" >
+              <button (click)="modal(1)"  class="confirm">YES</button> <button (click)="modal(2)"  class="cancel">NO</button>
+            </div>s -->
+          </div>
+          <p style="margin-top: 16px;text-align: center;color: #000;">These tokens would be sent to your account: <a
+              style="cursor: pointer;" (click)="etherscanAddressDetails(userAddress)">{{userAddress}}</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop fade in"></div>
+  </div>
+  <div *ngIf="trackCancelModal">
+    <div class="modal fade in portfolio-dialogue" tabindex="-1" role="dialog">
+      <div class="modal-dialog " role="document">
+        <div [ngClass]="switchThemeService.switchTheme ? 'modal-content darkThemeModal-Content':'modal-content' "
+          class="modal-content">
+          <div class="modal-header" style="    padding: 10px!important;background: #9C27B0!important;">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="z-index: 999;!important;"
+              (click)="closeCancelModal()"><span aria-hidden="true"><i class="fa fa-times"></i></span>
+            </button>
+            <h4 class="modal-title" style="color: white">Cancel Basket</h4>
+          </div>
+          <div class="modal-body" style="padding: 45px!important;padding-top: 0px!important;">
+            <h3>Token Summary</h3>
+            <table class="table table-responsive table-bordered">
+              <tr>
+                <th>Token</th>
+                <th>Value</th>
+              </tr>
+              <tr *ngFor="let tokens of selectCancelPortfolio.token">
+                <td>{{tokens.Symbol}}</td>
+                <td>{{tokens.value}}</td>
+              </tr>
+            </table>
+            <h5>Cancellation fee {{estimateGas}} </h5>
+            <h4 style="text-align: right">Are you sure want to delete Basket ?</h4>
+            <div class="row pull-right">
+              <button class="btn btn-primary" (click)="CancelPortfolio(selectCancelPortfolio);closeCancelModal()">Yes
+              </button>
+              <button class="btn btn-danger" (click)="closeCancelModal()">No</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop fade in"></div>
+  </div>
+  <div *ngIf="insatantBuyModal">
+    <div class="modal fade in portfolio-dialogue" tabindex="-1" role="dialog">
+      <div class="modal-dialog " role="document">
+        <div [ngClass]="switchThemeService.switchTheme ? 'modal-content darkThemeModal-Content':'modal-content' "
+          class="modal-content">
+          <div class="modal-header" style="    padding: 10px!important;
+    background: #323c49!important;">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="z-index: 999;!important;"
+              (click)="closeInstantbuyModal()">
+              &#10005;
+              <!-- <span aria-hidden="true"><i class="fa fa-times"></i></span> -->
+            </button>
+            <h4 class="modal-title" style="color: white">Token Basket Name : {{selectedPortfolioToken.basketName}}</h4>
+            <br>
+          </div>
+          <div class="modal-body" style="padding: 45px!important;">
+            <table class="table  table-bordered">
+              <tr>
+                <th>Token</th>
+                <th>Value</th>
+              </tr>
+              <tr *ngFor="let tokens of selectedPortfolioToken.tokens">
+                <td>{{tokens.tokenSymbol}}</td>
+                <td>{{tokens.amount}}</td>
+              </tr>
+            </table>
+            <p><b>ASKING PRICE</b> : {{selectedPortfolioToken.basketPrice}} ETH</p>
+            <p style="font-style: italic;">When you buy this Token Basket, you get ownership of the Basket smart
+              contract which contains the underlying Tokens. Once you liquidate, you will be able to see the underlying
+              Tokens in your account.</p>
+            <div class="pull-center">
+              <div style="text-align: center;">
+                <button class="btn btn-custom btn-justify" (click)="buy(selectedPortfolioToken);closeInstantbuyModal()">
+                  Buy now
+                </button><button class="btn btn-custom btn-justify" (click)="closeInstantbuyModal()">Cancel</button>
+
+              </div>
+              <!-- <br>
+              <div style="text-align: center;">
+                <button class="btn btn-custom btn-justify" (click)="closeInstantbuyModal()">Cancel</button>
+              </div> -->
+              <!-- <button class="btn btn-custom btn-justify" (click)="buy(selectedPortfolioToken);closeInstantbuyModal()">Buy now</button>
+              <button class="btn btn-custom btn-justify"  (click)="closeInstantbuyModal()">Cancel</button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop fade in"></div>
+  </div>
+
+  <!-- <div class="popup-box" [ngStyle]="{'display':EthBasketService.displaybask_loader}">
+    <div class="popup-gif">
+      <div class="popup_header">Please Wait</div>
+      <div class="popup_content">
+        <div class="popup_sub">
+          <img class="img img-responsive gif-img" src="assets/images/tt-loader.png  " alt="" style="width: 100px;">
+        </div>
+        <div class="gif_footer">Please wait don't close the application your request is processing . . .</div>
+      </div>
+    </div>
+  </div> -->
+
+  <div *ngIf="shareModal">
+    <div class="modal fade in portfolio-dialogue" tabindex="-1" role="dialog">
+      <div class="modal-dialog " style="width: 21%!important;" role="document">
+        <div
+          [ngClass]="switchThemeService.switchTheme ? 'modal-content darkThemeModal-Content shareModal':'modal-content' "
+          class="modal-content">
+          <div class="modal-header" style="padding: 10px!important;">
+            <div style="z-index: 999;!important; float: right;cursor: pointer;
+    font-size: 24px;" (click)="closeShareModal()"><span aria-hidden="true"><i class="fa fa-times"></i></span>
+            </div>
+            <h4 class="modal-title" style="color: white">Share</h4>
+          </div>
+          <div class="modal-body" style="padding: 30px;padding-top: 5px!important;">
+            <div class="input-group">
+              <!-- <label *ngIf="isCopied1 !== true" style="cursor: pointer" ngxClipboard [cbContent]="link"
+                (cbOnSuccess)="isCopied1 = true">Click to copy link</label> -->
+              <label *ngIf="isCopied1 === true">Link copied</label>
+              <!-- <p style="border: none; width: 200px;
+    white-space: nowrap;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: white;
+    box-shadow: none!important;
+    border-bottom: 1px solid #ccc!important;
+    border-radius: 0px!important;" ngxClipboard [cbContent]="link" (cbOnSuccess)="isCopied1 = true">{{link}}</p> -->
+              <p style="border: none; width: 200px;
+    white-space: nowrap;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: white;
+    box-shadow: none!important;
+    border-bottom: 1px solid #ccc!important;
+    border-radius: 0px!important;">{{link}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop fade in"></div>
+  </div>
+  <footer></footer>
+</div>

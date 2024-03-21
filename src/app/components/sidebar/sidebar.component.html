@@ -1,0 +1,108 @@
+<div class="sidebar" [class.expanded]="menuExpanded">
+  <!-- Sidebar -->
+  <div class="logo">
+    <div class="logo-container">
+      <img src="assets/images/Tokenomatic_logo_white.png">
+    </div>
+    <div class="hamburger" (click)="toggleMenu()">
+      <img src="assets/images/hamburger.png">
+    </div>
+  </div>
+  <ul>
+    <!-- <li>
+      <a routerLink="/profile" routerLinkActive="active"><img src="assets/images/airdrop.png">
+      <div class="cont1">Profile</div>
+    </a>
+    </li> -->
+    <li>
+      <a routerLink="/wallets-manager" routerLinkActive="active" class="link" (click)="collapseMenu()">
+        <div class="link-image-container">
+          <img src="assets/images/wallet.png">
+        </div>
+        <span>Wallet</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/dashboard" routerLinkActive="active" class="link" (click)="collapseMenu()"
+        (click)="collapseMenu()">
+        <div class="link-image-container">
+          <img src="assets/images/dashboard.svg">
+        </div>
+        <span>Dashboard</span>
+      </a>
+    </li>
+
+    <li>
+      <a routerLink="/exchange" routerLinkActive="active" class="link" (click)="collapseMenu()">
+        <div class="link-image-container">
+          <img src="assets/images/exchange.png">
+        </div>
+        <span>Exchange</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/baskets" routerLinkActive="active" class="link" (click)="collapseMenu()">
+        <div class="link-image-container">
+          <img src="assets/images/basket.png">
+        </div>
+        <span>Basket</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/stakeSolution" routerLinkActive="active" class="link" (click)="collapseMenu()">
+        <div class="link-image-container">
+          <img src="assets/images/stake.png">
+        </div>
+        <span>Staking</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/trade" routerLinkActive="active" class="link" (click)="collapseMenu()">
+        <div class="link-image-container">
+          <img src="assets/images/trade.png">
+        </div>
+        <span>Trading</span>
+      </a>
+    </li>
+    <!-- <li>
+      <a routerLink="/markets" routerLinkActive="active" class="link" (click)="collapseMenu()">
+        <div class="link-image-container">
+          <img src="assets/images/markets.png">
+        </div>
+        <span>Markets</span>
+      </a>
+    </li> -->
+  </ul>
+  <ul class="settings">
+    <li>
+      <a routerLink="/settings" routerLinkActive="active" class="link" (click)="collapseMenu()">
+        <div class="link-image-container">
+          <img src="assets/images/settings.png">
+        </div>
+        <span>Settings</span>
+      </a>
+    </li>
+    <li>
+      <a routerLinkActive="active" class="link" (click)="collapseMenu();logout();">
+        <div class="link-image-container">
+          <img src="assets/images/logout.png">
+        </div>
+        <span>Logout</span>
+      </a>
+    </li>
+  </ul>
+
+</div>
+
+<!-- <div class="popup-box" [ngStyle]="{'display':displayRequest}">
+  <div class="popup-gif">
+    <div class="popup_header">Exchange Basket</div>
+    <div class="popup_content">
+      <div class="popup_sub">
+        <div class="gif_footer">
+          <p>Coming Soon</p>
+        <button class="sign-publish-portfolio-button" (click)="requestForTheme()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div> -->

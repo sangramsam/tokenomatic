@@ -1,0 +1,23 @@
+<div class="dashboard-announcements">
+	<swiper [config]="announcementSwiperConfig" [initialize]="initialize">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide" *ngFor="let a of announcements">
+				<div class="announcement">
+					<div class="a-container">
+						<div class="a-img"><img [src]="a.img"></div>
+						<h5 class="a-heading" ellipsis>{{a.title}}</h5>
+						<p class="a-body" ellipsis>
+							{{a.desc}}
+						</p>	
+					</div>
+					<div class="readmore" (click)="openLink(a)">Read More...</div>
+				</div>	
+			</div>
+		</div>
+		<div class="controls">
+			<button class="button swiper-button-prev"><i class="fa fa-chevron-left"></i></button>
+			<button class="button swiper-pagination-btn"><div class="swiper-pagination"></div></button>
+			<button class="button swiper-button-next"><i class="fa fa-chevron-right"></i></button>
+		</div>
+	</swiper>
+</div>

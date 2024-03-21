@@ -1,0 +1,276 @@
+<div>
+  <div class="container col-12">
+    <div class="row">
+      <div class="col-xl-6 col-md-12 col-lg-6 col-sm-12 t2">
+        <div class="card-body" style="background-color: #2a2a2a;">
+          <div class="row col-12">
+            <p class="col-sm">
+              <b style="color: white;">Account Information</b>
+            </p>
+          </div>
+          <hr style="background-color:white;" />
+          <br />
+          <div class="row col-12">
+            <p class="col-sm" style="color: white;">
+              Your Address:&nbsp;&nbsp;
+              <b
+                ><span style="color: white;">{{ accountInfo.account }}</span></b
+              >
+            </p>
+          </div>
+          <br />
+          <div class="row col-12">
+            <p class="col-sm" style="color: white;">
+              Tezos Balance :&nbsp;&nbsp;
+              <b
+                ><span style="color: white;">{{
+                  accountInfo.tezBalance
+                }}</span></b
+              >&nbsp;XTZ
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-md-12 col-lg-6 col-sm-12 t2">
+        <div class="card-body" style="background-color: #2a2a2a;">
+          <div class="row col-12">
+            <p class="col-sm">
+              <b style="color: white;">Delegation Information:</b>
+            </p>
+          </div>
+          <hr style="background-color:white;" />
+          <br />
+          <div class="row col-12">
+            <p class="col-sm" style="color: white;">
+              Delegate Address:&nbsp;&nbsp;
+              <b
+                ><span *ngIf="DelegationAddressTez && accountInfo != undefined && (accountInfo.tezBalance>0)" style="color: white;">{{
+                  DelegationAddressTez
+                }}</span></b
+              >
+            </p>
+          </div>
+          <br />
+          <div class="row col-12">
+            <p class="col-sm" style="color: white;">
+              Delegated Amount :&nbsp;&nbsp;
+              <b
+                ><span *ngIf="DelegationAddressTez && accountInfo != undefined && (accountInfo.tezBalance>0)" style="color: white;">{{
+                  accountInfo.tezBalance
+                }}&nbsp;XTZ</span></b
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="container col-12">
+    <div class="row">
+      <div class="col-xl-6 col-md-12 col-lg-6 col-sm-12 t2">
+        <div class="card-body" style="background-color: #2a2a2a;">
+          <div class="row col-12">
+            <p class="col-sm">
+              <b style="color: white;">Set Delegation</b>
+            </p>
+          </div>
+          <hr style="background-color:white;" />
+          <br />
+          <div class="row col-12">
+            <p class="col-sm" style="color: white; font-size: 15px;">
+              Address to Delegate to:&nbsp;&nbsp;
+              <br />
+              <br />
+              <span class="rb-note">
+                You can select a delegate/baker based on their yield, from this
+                link: <a class="link" style="cursor: pointer;color: blue;"
+                (click)="shell.openExternal(getAddressUrl())" >Delegates</a>
+              </span>
+              <br />
+              <span class="ra-note">
+                Note: <br />
+                1. Your entire XTZ balance will be delegated to the address you
+                select. The complete amount will still stay in your wallet, and
+                you are free to use it for other purposes. But do note that you
+                will receive the reward, depending upon the amount of XTZ that
+                stays in your wallet, after you have delegated. <br />
+                2. In case you want to undelegate, you can send the entire XTZ
+                to some other address that hasn't delegated yet.
+              </span>
+              <br />
+              <br />
+              <input
+                type="text"
+                class="delAddInpStyle"
+                matInput
+                placeholder="Enter Address"
+                (change)="setDelegationAddress($event)"
+              />
+            </p>
+          </div>
+          <br />
+          <button class="btn" (click)="setDelegate()">Set</button>
+        </div>
+      </div>
+      <div class="col-xl-6 col-md-12 col-lg-6 col-sm-12 t2">
+        <div class="card-body" style="background-color: #2a2a2a;">
+          <div class="row col-12">
+            <p class="col-sm">
+              <b style="color: white;">Transfer Tezos</b>
+            </p>
+          </div>
+          <hr style="background-color:white;" />
+          <br />
+          <div class="row col-12">
+            <p class="col-sm" style="color: white;">
+              To Account:&nbsp;&nbsp;
+              <input
+                type="text"
+                class="delAddInpStyle"
+                matInput
+                placeholder="Enter Address"
+                (change)="setToAddress($event)"
+              />
+            </p>
+          </div>
+          <br />
+          <div class="row col-12">
+            <p class="col-sm" style="color: white;">
+              Amount:&nbsp;&nbsp;
+              <input
+                type="text"
+                class="transferTezAmount"
+                matInput
+                (change)="setTransferAmount($event)"
+              />
+              XTZ
+            </p>
+          </div>
+          <br />
+          <button class="btn" (click)="transferTezos()">Transfer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!------------------->
+
+<!-- <div class="portfolio-holder darkTheamebackgroundColor">
+  <div class="portfolio darkTheameBoxbackground">
+    <mat-card>
+      <mat-card-header><u>Account Information</u></mat-card-header>
+      <br />
+      <mat-card-content>
+        Your Address :
+        <b
+          ><span>{{ accountInfo.account }}</span></b
+        >
+        ;&nbsp;&nbsp;Tezos Balance :
+        <b
+          ><span>{{ accountInfo.tezBalance }}</span></b
+        >
+        Tz
+      </mat-card-content>
+
+      <mat-card-header><u>Delegation Information</u></mat-card-header>
+      <br />
+      <mat-card-content>
+        Delegate Address:
+        <div *ngIf="newDelegationAddress">
+          <b
+            ><span>{{ newDelegationAddress }}</span></b
+          >
+        </div>
+        ;&nbsp;&nbsp;Delegated Amount:
+        <div *ngIf="newDelegationAddress">
+          <b
+            ><span>{{ accountInfo.tezBalance }}</span></b
+          >
+        </div>
+        Tz
+      </mat-card-content> -->
+
+<!-- //<mat-card-header><u>Delegation Information</u></mat-card-header>
+      <br />
+      <mat-card-content>
+        <table width="100%">
+          <tr>
+            <th width="10%">Serial No</th>
+             <th width="35%">KT1 Address</th> 
+            <th width="35%">Delegate Address</th>
+            <th width="20%">Balance (Tz)</th>
+          </tr>
+          <tr
+            *ngFor="
+              let account of accountInfo.originatedAccounts;
+              let i = index
+            "
+          >
+            <td>{{ i }}</td>
+             <td>{{ account.address }}</td>
+            <td>{{ account.delegatedAddress }}</td>
+            <td>{{ account.balance }}</td>
+          </tr>
+        </table>
+      </mat-card-content>
+      
+      <mat-card-header><u>New Origination</u></mat-card-header>
+			<mat-card-content>
+		    	Enter Amount : 
+		    	<mat-form-field>
+		      		<input type="text" matInput placeholder="Tz" (change)="setOriginationAmount($event)">
+		    	</mat-form-field>
+		    	<button (click)="originateAccount()">Submit</button>
+			</mat-card-content> -->
+
+<!-- <mat-card-header><u>Set Delegation</u></mat-card-header>
+      <mat-card-content> -->
+<!-- //Serial No :
+        <mat-form-field>
+          <input type="text" matInput (change)="setSerialNo($event)" />
+        </mat-form-field> 
+         <mat-card-content> 
+            Enter Amount :
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            placeholder="Tz"
+            (change)="setOriginationAmount($event)"
+          />
+        </mat-form-field> 
+         <button (click)="originateAccount()">Submit</button> 
+         </mat-card-content> -->
+<!-- Address To Delegate :
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            placeholder="Enter Address"
+            (change)="setDelegationAddress($event)"
+          />
+        </mat-form-field>
+        <button (click)="setDelegate()">Submit</button>
+      </mat-card-content>
+
+      <mat-card-header><u>Transfer Tezos</u></mat-card-header>
+      <mat-card-content> -->
+<!-- //From Account :
+        <mat-form-field>
+          <input type="text" matInput (change)="setFromAddress($event)" />
+        </mat-form-field> -->
+<!-- To Account :
+        <mat-form-field>
+          <input type="text" matInput (change)="setToAddress($event)" />
+        </mat-form-field>
+        Amount :
+        <mat-form-field>
+          <input type="text" matInput (change)="setTransferAmount($event)" />
+        </mat-form-field>
+        <button (click)="transferTezos()">Submit</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div> -->

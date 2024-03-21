@@ -1,0 +1,72 @@
+<!-- <p>
+  <strong>{{walletBaseCurrency}} </strong>Wallets
+</p> -->
+<div class="container1 table-responsive-xl">
+	<h4>
+	  <strong>{{getExchangeName()}} </strong>Wallets
+	</h4>
+	<table class="table table-dark">
+	  <thead>
+	    <tr class="trback">
+	      <!-- <th scope="col">Blockchain</th> -->
+	      <th scope="col">Wallet Name</th>
+	      <th scope="col">Address</th>
+	      <th scope="col"></th>
+	      <th scope="col"></th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	  	<tr *ngIf="wallets.length==0">
+	  		<td colspan="4">
+	  			No soft Wallets listed yet. Please go to Create/Add Wallet tab on top to create a new wallet or add an existing wallet.
+	  		</td>
+	  	</tr>
+	    <tr *ngFor="let w of wallets">
+	      <!-- <th scope="row" class="whitetext"><img [src]="exchangeImg" style="max-width: 20px;"></th> -->
+	      <!-- <th scope="row" class="whitetext">{{getExchangeName()}}</th> -->
+	      <td class="whitetext">{{w.walletName}}</td>
+	      <td class="whitetext">{{w.getAddress()}}</td>
+	      <td class="whitetext"><button class="btn btn-primary btn-sm" style="width: 100%;" type="button" (click)="requestForTheme(w)">Wallet Details</button></td>
+				<td class="whitetext"><button class="btn btn-primary btn-sm" style="width: 100%;" type="button" (click)="delete(w)">Delete Wallet Details</button></td>
+				<td *ngIf="getExchangeName()==='NEO'" class="whitetext"><button class="btn btn-primary btn-sm" style="width: 100%;" type="button" (click)="handleWalletTokens(w)">Token Details</button></td>
+	      <td *ngIf="getExchangeName()==='Ethereum'" class="whitetext"><button class="btn btn-primary btn-sm" style="width: 100%;" type="button" (click)="shell.openExternal(getTokenDetailUrl()+w.getAddress())">Token Details</button></td>
+	    </tr>
+	    <!-- <tr *ngIf="hasLedgerSupport()">
+	  		<td colspan="4" align="left">
+	  			<b>Ledger Wallets</b>
+	  			<button class="sync" (click)="fetchHDWallets()">Sync <i class="fa fa-refresh"></i></button>
+	  		</td>
+	  	</tr> -->
+	    <tr *ngFor="let hd of hdWallets">
+	      <td class="whitetext">{{hd.walletName}}</td>
+	      <td class="whitetext">{{hd.getAddress()}}</td>
+	      <td></td>
+        <td *ngIf="getExchangeName()==='NEO'" class="whitetext"><button class="btn btn-primary btn-sm" style="width: 100%;" type="button" (click)="handleWalletTokens(hd)">Token Details</button></td>
+	      <td *ngIf="getExchangeName()==='Ethereum'" class="whitetext"><button class="btn btn-primary btn-sm" style="width: 100%;" type="button" (click)="shell.openExternal(getTokenDetailUrl()+hd.getAddress())">Token Details</button></td>
+	    </tr>
+	  </tbody>
+	</table>
+</div>
+
+<div class="popup-box" [ngStyle]="{'display':displayRequest}">
+  <div class="popup-gif">
+    <div class="popup_header">Please Enter your Wallet Password</div>
+    <div class="popup_content">
+      <div class="popup_sub">
+        <div class="gif_footer">
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
+			(input)="displayWrongPassword='none'"	   
+[(ngModel)]="password">
+            <small id="passwordWrong" class="form-text text-muted" style="font-size: 40%;color: red !important;"
+                   [ngStyle]="{'display':displayWrongPassword}">Please verify your password.
+            </small>
+          </div>
+          <button class="sign-publish-portfolio-button" (click)="handleWalletPassword()">Confirm</button>
+          <button class="sign-publish-portfolio-button" (click)="requestForTheme(null)">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

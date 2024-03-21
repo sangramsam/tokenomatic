@@ -1,0 +1,110 @@
+<!-- <div class="dashboard-wallet">
+	<div class="row">
+		<div class="col-8 border-right">
+			<div class="row margin-bottom">
+				<div class="col-12">
+					<span class="font-12"><b>Wandx</b></span> <span class="font-9">(in Wallet 1)</span>
+				</div>
+			</div>
+			<div class="row margin-bottom">
+				<div class="col-4">
+					Amount
+				</div>
+				<div class="col-4 border-right">
+					<b>19181.90</b>
+				</div>
+				<div class="col-4">
+					Volume(24hr)
+				</div>
+			</div>
+			<div class="row margin-bottom">
+				<div class="col-4">
+					Total Value
+				</div>
+				<div class="col-4 border-right">
+					<b>$9131.11</b>
+				</div>
+				<div class="col-4">
+					<b>19181.90 ETH</b>
+				</div>
+			</div>
+		</div>
+		<div class="col-4">
+			<div class="price-change-col">
+				<div class="percent-change green-color">
+					<span class="percent-change-text"><b>21%</b></span>
+					<br>
+					<span><b>+$183.90</b></span>
+					<div class="lvalign"><i class="fa fa-sort-up"></i></div>
+				</div>
+				<div class="tp-row">
+					<span><b>1/h</b></span>
+					<span><b>24/h</b></span>
+					<span><b>1/w</b></span>
+				</div>	
+			</div>
+			
+		</div>
+	</div>
+</div> -->
+<style type="text/css">
+	
+</style>
+<div class="dashboard-wallet">
+	<div class="grid">
+		<div class="col3">
+			<div class="col3-container border-right">
+				<div class="inner-grid">
+					<div class="col-span-1-4">
+						<span class="font-12"><b>{{data.symbol}}</b></span> 
+						<!-- <span class="font-9">(in Wallet 1)</span> -->
+					</div>
+					<!-- Row 2 -->
+					<div class="padding-top-5">Amount</div>
+					<div class="padding-top-5 border-right padding-left-5 text-center"><b>{{data.totalToken | number : '1.1-2'}}</b></div>
+					<div class="padding-top-5 text-center">Volume(24hr)</div>
+
+					<!-- Row 3 -->
+					<div>Total Value</div>
+					<div class="border-right padding-left-5 text-center"><b *ngIf="!data.totalValue">0</b><b *ngIf="data.totalValue">${{data.totalValue | number : '1.1-2'}}</b></div>
+					<div class="text-center"><b>{{data.volume | number : '1.1-2'}}</b></div>
+
+				</div>
+			</div>
+		</div>
+		<div class="col1">
+			<div class="price-change-col">
+				<div class="percent-change green-color" 
+					[class.green-color]="data.changePercent >= 0"
+					[class.red-color]="data.changePercent < 0"
+				>
+					<span class="percent-change-text"><b *ngIf="!data.changePercent">0</b><b *ngIf="data.changePercent">{{data.changePercent | number : '1.1-2'}}%</b> <i class="fa fa-sort-up" 
+							[class.fa-sort-up]="data.changePercent > 0"
+							[class.fa-sort-down]="data.changePercent < 0"
+						></i></span>
+					<br>
+					<span class="color-white">
+						<b *ngIf="data.changeUSD != 0">${{data.changeUSD | number : '1.1-3'}}</b>
+						<b *ngIf="data.changeUSD == 0">0.0</b>
+					</span>
+					<!-- <div class="lvalign"
+						[class.lvalign-down]="data.changePercent < 0"
+					>
+						<i class="fa fa-sort-up" 
+							[class.fa-sort-up]="data.changePercent > 0"
+							[class.fa-sort-down]="data.changePercent < 0"
+						>
+								
+						</i>
+					</div> -->
+				</div>
+				<div class="tp-row">
+					<span><b>1/h</b></span>
+					<span><b>24/h</b></span>
+					<span><b>1/w</b></span>
+				</div>	
+			</div>
+		</div>
+	</div>
+</div>
+

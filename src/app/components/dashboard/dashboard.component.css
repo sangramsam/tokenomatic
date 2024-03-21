@@ -1,0 +1,255 @@
+/*
+	custom grid classes
+*/
+
+.col-xxl-1, .col-xxl-2, .col-xxl-3, .col-xxl-4, .col-xxl-5, .col-xxl-6, .col-xxl-7, .col-xxl-8, .col-xxl-9, .col-xxl-10, .col-xxl-11, .col-xxl-12, .col-xxl,
+.col-xxl-auto {
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+@media (min-width: 1366px) {
+	.d-xxl-flex {
+    display: -ms-flexbox !important;
+    display: flex !important;
+  }
+  .d-xxl-block {
+    display: block !important;
+  }
+  .col-xxl {
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    max-width: 100%;
+  }
+  .col-xxl-auto {
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    width: auto;
+    max-width: none;
+  }
+  .col-xxl-1 {
+    -ms-flex: 0 0 8.333333%;
+    flex: 0 0 8.333333%;
+    max-width: 8.333333%;
+  }
+  .col-xxl-2 {
+    -ms-flex: 0 0 16.666667%;
+    flex: 0 0 16.666667%;
+    max-width: 16.666667%;
+  }
+  .col-xxl-3 {
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+  .col-xxl-4 {
+    -ms-flex: 0 0 33.333333%;
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+  .col-xxl-5 {
+    -ms-flex: 0 0 41.666667%;
+    flex: 0 0 41.666667%;
+    max-width: 41.666667%;
+  }
+  .col-xxl-6 {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .col-xxl-7 {
+    -ms-flex: 0 0 58.333333%;
+    flex: 0 0 58.333333%;
+    max-width: 58.333333%;
+  }
+  .col-xxl-8 {
+    -ms-flex: 0 0 66.666667%;
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%;
+  }
+  .col-xxl-9 {
+    -ms-flex: 0 0 75%;
+    flex: 0 0 75%;
+    max-width: 75%;
+  }
+  .col-xxl-10 {
+    -ms-flex: 0 0 83.333333%;
+    flex: 0 0 83.333333%;
+    max-width: 83.333333%;
+  }
+  .col-xxl-11 {
+    -ms-flex: 0 0 91.666667%;
+    flex: 0 0 91.666667%;
+    max-width: 91.666667%;
+  }
+  .col-xxl-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .offset-xxl-0 {
+    margin-left: 0;
+  }
+  .offset-xxl-1 {
+    margin-left: 8.333333%;
+  }
+  .offset-xxl-2 {
+    margin-left: 16.666667%;
+  }
+  .offset-xxl-3 {
+    margin-left: 25%;
+  }
+  .offset-xxl-4 {
+    margin-left: 33.333333%;
+  }
+  .offset-xxl-5 {
+    margin-left: 41.666667%;
+  }
+  .offset-xxl-6 {
+    margin-left: 50%;
+  }
+  .offset-xxl-7 {
+    margin-left: 58.333333%;
+  }
+  .offset-xxl-8 {
+    margin-left: 66.666667%;
+  }
+  .offset-xxl-9 {
+    margin-left: 75%;
+  }
+  .offset-xxl-10 {
+    margin-left: 83.333333%;
+  }
+  .offset-xxl-11 {
+    margin-left: 91.666667%;
+  }
+}
+.dashboard {
+	padding-top: 15px;
+  min-width: 980px;
+}
+.container-fluid {
+	background-color: #404040;
+}
+.first-row {
+	height: 45vh;
+}
+.content {
+	height: 100%;
+}
+.content-auto {
+	height: auto;
+}
+.content-heading {
+	color: white;
+	background-color: #2c2c2c;
+	padding: 5px 15px;
+	margin-bottom: 0;
+}
+.tp-selector {
+	float: right;
+	margin-left: 10px;
+}
+.content-body {
+	height: calc(100% - 27px);
+	padding: 10px;
+	padding-bottom: 20px;
+	background-color: #333333;
+}
+.content-body2 {
+	background-color: #333333;
+	margin-bottom: 10px;
+}
+.no-scrollbar-container {
+	overflow: hidden;
+	height: 125px;
+}
+.no-scrollbar {
+	overflow-x: auto;
+	overflow-y: hidden;
+	height: calc(100% + 11px);
+}
+
+
+.width-100 {
+	width: 1400px;
+}
+
+.floating-tab {
+	width: 337px;
+	padding: 5px 0px 10px;
+	display: inline-block;
+	text-align: left;
+}
+.margin-top-15 {
+	margin-top: 15px;
+}
+.ws-swiper {
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-bottom: 15px;
+	position: relative;
+}
+.ws-swiper .col {
+	text-align: center;
+}
+.ws-swiper swiper {
+	width: 100%;
+}
+.ws-swiper .swiper-pagination-fraction {
+	color: white;
+	bottom: 0;
+}
+.ws-swiper .swiper-button-prev {
+	left: 2px;
+	color: white;
+	background-color: #6f6f6f;
+	top: calc(50% - 10px);
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+	margin-top: auto;
+	background-image: unset;
+	transform: translateY(-50%);
+}
+.ws-swiper .swiper-button-next {
+	right: 2px;
+	color: white;
+	background-color: #6f6f6f;
+	top: calc(50% - 10px);
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+	margin-top: auto;
+	background-image: unset;
+	transform: translateY(-50%);
+}
+.vhalign {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+@media (min-width: 1366px) and (max-width: 1795px) {
+  .third-wallet {
+    display: none;
+  }
+}
+@media (max-width: 1220px) {
+  .third-wallet {
+    display: none;
+  }
+}
+
+
+
+
+
+
+
+

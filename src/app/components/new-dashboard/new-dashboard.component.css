@@ -1,0 +1,31 @@
+.newDash{
+    color: white;
+    margin-left:10px;
+    padding: 10px;
+}
+.basket1{
+    min-height: 200px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    padding: 5px;
+    margin-top: 10px;
+}
+.basket2{
+    min-height: 200px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    padding: 5px;
+    margin-top: 10px;
+}
+.basket3{
+    min-height: 200px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    padding: 5px;
+    margin-top: 10px;
+}
+.ticker{
+    min-height: 41px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    margin-top: 10px;
+}
+.cgLKMX{
+    max-width: 100%!important;
+}

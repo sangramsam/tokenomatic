@@ -1,0 +1,28 @@
+.newDash{
+    color: white;
+    margin-left:10px;
+    padding: 10px;
+}
+.basket1{
+    min-height: 200px;
+    border: 1px solid white;
+    padding: 5px;
+    margin-top: 10px;
+}
+.basket2{
+    min-height: 200px;
+    border: 1px solid white;
+    padding: 5px;
+    margin-top: 10px;
+}
+.basket3{
+    min-height: 200px;
+    border: 1px solid white;
+    padding: 5px;
+    margin-top: 10px;
+}
+.ticker{
+    min-height: 70px;
+    border: 1px solid white;
+    margin-top: 10px;
+}
